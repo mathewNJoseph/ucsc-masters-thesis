@@ -1,0 +1,72 @@
+\documentclass[11pt]{ucthesis}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algcompatible}
+\usepackage{algpseudocode}
+\usepackage{siunitx}
+\usepackage{url}
+\sisetup{
+  group-separator = {,}, 
+  group-minimum-digits = 4,
+  table-number-alignment = right, 
+  group-digits          = integer
+}
+
+
+\def\dsp{\def\baselinestretch{2.0}\large\normalsize}
+\dsp
+\begin{document}
+\title{Thesis Title}
+\author{Sammy Slug}
+\degreeyear{2025}
+\degreemonth{December}
+\degree{MASTER OF SCIENCE}
+% \chair{Professor Samuel}
+\committeememberone{Professor Samuel}
+\committeemembertwo{Professor Slug}
+\numberofmembers{2} %% (including chair) possible: 3, 4, 5, 6
+\deanlineone{Peter Biehl}
+\deanlinetwo{Vice Provost and Dean of Graduate Studies}
+\deanlinethree{}
+\field{Computer Science and Engineering}
+\campus{Santa Cruz}
+
+\begin{frontmatter}
+\maketitle
+\copyrightpage
+\tableofcontents
+\listoffigures
+\listoftables
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\begin{acknowledgements}
+  I would like to thank several people.
+\end{acknowledgements}
+\end{frontmatter}
+
+\chapter{Introduction}
+\input{introduction}
+
+\chapter{Background}
+\input{background}
+
+\chapter{Methodology}
+\input{method}
+
+\chapter{Evaluation}
+\input{evaluation}
+
+\chapter{Related Work} 
+\input{related}
+
+\chapter{Conclusion}
+\input{conclusion}
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{report}
+
+\end{document}
