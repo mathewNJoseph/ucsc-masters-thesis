@@ -1,21 +1,338 @@
-%% uctest.bib 11/3/94
-%% Copyright (C) 1988-2004 Daniel Gildea, BBF, Ethan Munson.
-%
-% This work may be distributed and/or modified under the
-% conditions of the LaTeX Project Public License, either version 1.3
-% of this license or (at your option) any later version.
-% The latest version of this license is in
-%   http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of LaTeX
-% version 2003/12/01 or later.
-%
-% This work has the LPPL maintenance status "maintained".
-% 
-% The Current Maintainer of this work is Daniel Gildea.
 
-@article{beamer2015gap,
-	title={The {GAP} benchmark suite},
-	author={Beamer, Scott and Asanovi{\'c}, Krste and Patterson, David},
-	journal={arXiv preprint arXiv:1508.03619},
-	year={2015}
+@inproceedings{gsteiger_caribou_2024,
+	address = {Austin TX USA},
+	title = {Caribou: {Fine}-{Grained} {Geospatial} {Shifting} of {Serverless} {Applications} for {Sustainability}},
+	isbn = {979-8-4007-1251-7},
+	shorttitle = {Caribou},
+	url = {https://dl.acm.org/doi/10.1145/3694715.3695954},
+	doi = {10.1145/3694715.3695954},
+	language = {en},
+	urldate = {2026-01-05},
+	booktitle = {Proceedings of the {ACM} {SIGOPS} 30th {Symposium} on {Operating} {Systems} {Principles}},
+	publisher = {ACM},
+	author = {Gsteiger, Viktor Urban and Long, Pin Hong (Daniel) and Sun, Yiran (Jerry) and Javanrood, Parshan and Shahrad, Mohammad},
+	month = nov,
+	year = {2024},
+	pages = {403--420},
+	file = {Full Text PDF:/Users/mathewjoseph/Zotero/storage/T2V6HE95/Gsteiger et al. - 2024 - Caribou Fine-Grained Geospatial Shifting of Serverless Applications for Sustainability.pdf:application/pdf},
+}
+
+@inproceedings{souza_ecovisor_2023,
+	address = {Vancouver BC Canada},
+	title = {Ecovisor: {A} {Virtual} {Energy} {System} for {Carbon}-{Efficient} {Applications}},
+	isbn = {978-1-4503-9916-6},
+	shorttitle = {Ecovisor},
+	url = {https://dl.acm.org/doi/10.1145/3575693.3575709},
+	doi = {10.1145/3575693.3575709},
+	abstract = {Cloud platforms’ rapid growth is raising signiﬁcant concerns about their carbon emissions. To reduce emissions, future cloud platforms will need to increase their reliance on renewable energy sources, such as solar and wind, which have zero emissions but are highly unreliable. Unfortunately, today’s energy systems effectively mask this unreliability in hardware, which prevents applications from optimizing their carbon-efﬁciency, or work done per kilogram of carbon emitted. To address this problem, we design an “ecovisor,” which virtualizes the energy system and exposes software-deﬁned control of it to applications. An ecovisor enables each application to handle clean energy’s unreliability in software based on its own speciﬁc requirements. We implement a small-scale ecovisor prototype that virtualizes a physical energy system to enable software-based application-level i) visibility into variable grid carbon-intensity and renewable generation and ii) control of server power usage and battery charging/discharging. We evaluate the ecovisor approach by showing how multiple applications can concurrently exercise their virtual energy system in different ways to better optimize carbon-efﬁciency based on their speciﬁc requirements compared to a general system-wide policy.},
+	language = {en},
+	urldate = {2025-12-18},
+	publisher = {ACM},
+	author = {Souza, Abel and Bashir, Noman and Murillo, Jorge and Hanafy, Walid and Liang, Qianlin and Irwin, David and Shenoy, Prashant},
+	month = jan,
+	year = {2023},
+	keywords = {read},
+	pages = {252--265},
+	file = {PDF:/Users/mathewjoseph/Zotero/storage/F2MB6GMU/Souza et al. - 2023 - Ecovisor A Virtual Energy System for Carbon-Efficient Applications.pdf:application/pdf},
+}
+
+@inproceedings{bashir_enabling_2021,
+	address = {Seattle WA USA},
+	title = {Enabling {Sustainable} {Clouds}: {The} {Case} for {Virtualizing} the {Energy} {System}},
+	isbn = {978-1-4503-8638-8},
+	shorttitle = {Enabling {Sustainable} {Clouds}},
+	url = {https://dl.acm.org/doi/10.1145/3472883.3487009},
+	doi = {10.1145/3472883.3487009},
+	abstract = {Cloud platforms’ growing energy demand and carbon emissions are raising concern about their environmental sustainability. The current approach to enabling sustainable clouds focuses on improving energy-e�ciency and purchasing carbon o�sets. These approaches have limits: many cloud data centers already operate near peak e�ciency, and carbon o�sets cannot scale to near zero carbon where there is little carbon left to o�set. Instead, enabling sustainable clouds will require applications to adapt to when and where unreliable low-carbon energy is available. Applications cannot do this today because their energy use and carbon emissions are not visible to them, as the energy system provides the rigid abstraction of a continuous, reliable energy supply. This vision paper instead advocates for a “carbon �rst” approach to cloud design that elevates carbon-e�ciency to a �rst-class metric. To do so, we argue that cloud platforms should virtualize the energy system by exposing visibility into, and software-de�ned control of, it to applications, enabling them to de�ne their own abstractions for managing energy and carbon emissions based on their own requirements.},
+	language = {en},
+	urldate = {2025-12-18},
+	publisher = {ACM},
+	author = {Bashir, Noman and Guo, Tian and Hajiesmaili, Mohammad and Irwin, David and Shenoy, Prashant and Sitaraman, Ramesh and Souza, Abel and Wierman, Adam},
+	month = nov,
+	year = {2021},
+	pages = {350--358},
+	file = {PDF:/Users/mathewjoseph/Zotero/storage/9PF8K57P/Bashir et al. - 2021 - Enabling Sustainable Clouds The Case for Virtualizing the Energy System.pdf:application/pdf},
+}
+
+@inproceedings{souza_casper_2023,
+	title = {{CASPER}: {Carbon}-{Aware} {Scheduling} and {Provisioning} for {Distributed} {Web} {Services}},
+	shorttitle = {{CASPER}},
+	url = {http://arxiv.org/abs/2403.14792},
+	doi = {10.1145/3634769.3634812},
+	abstract = {There has been a significant societal push towards sustainable practices, including in computing. Modern interactive workloads such as geo-distributed web-services exhibit various spatiotemporal and performance flexibility, enabling the possibility to adapt the location, time, and intensity of processing to align with the availability of renewable and low-carbon energy. An example is a web application hosted across multiple cloud regions, each with varying carbon intensity based on their local electricity mix. Distributed load-balancing enables the exploitation of low-carbon energy through load migration across regions, reducing web applications carbon footprint. In this paper, we present CASPER, a carbon-aware scheduling and provisioning system that primarily minimizes the carbon footprint of distributed web services while also respecting their Service Level Objectives (SLO). We formulate CASPER as an multi-objective optimization problem that considers both the variable carbon intensity and latency constraints of the network. Our evaluation reveals the significant potential of CASPER in achieving substantial reductions in carbon emissions. Compared to baseline methods, CASPER demonstrates improvements of up to 70\% with no latency performance degradation.},
+	urldate = {2024-12-13},
+	booktitle = {Proceedings of the 14th {International} {Green} and {Sustainable} {Computing} {Conference}},
+	author = {Souza, Abel and Jasoria, Shruti and Chakrabarty, Basundhara and Bridgwater, Alexander and Lundberg, Axel and Skogh, Filip and Ali-Eldin, Ahmed and Irwin, David and Shenoy, Prashant},
+	month = oct,
+	year = {2023},
+	note = {arXiv:2403.14792 [cs]},
+	keywords = {Computer Science - Distributed, Parallel, and Cluster Computing, Computer Science - Networking and Internet Architecture, Computer Science - Performance, Mathematics - Optimization and Control},
+	pages = {67--73},
+	file = {Preprint PDF:/Users/mathewjoseph/Zotero/storage/IX2GHVST/Souza et al. - 2023 - CASPER Carbon-Aware Scheduling and Provisioning for Distributed Web Services.pdf:application/pdf;Snapshot:/Users/mathewjoseph/Zotero/storage/9IWN7KES/2403.html:text/html},
+}
+
+@inproceedings{maji_carboncast_2022,
+	address = {Boston Massachusetts},
+	title = {{CarbonCast}: multi-day forecasting of grid carbon intensity},
+	isbn = {978-1-4503-9890-9},
+	shorttitle = {{CarbonCast}},
+	url = {https://dl.acm.org/doi/10.1145/3563357.3564079},
+	doi = {10.1145/3563357.3564079},
+	abstract = {The ever-increasing demand for energy is resulting in considerable carbon emissions from the electricity grid. In recent years, there has been growing attention on demand-side optimizations to reduce carbon emissions from electricity usage. A vital component of these optimizations is short-term forecasting of the carbon intensity of the grid-supplied electricity. Many recent forecasting techniques focus on day-ahead forecasts, but obtaining such forecasts for longer periods, such as multiple days, while useful, has not gotten much attention. In this paper, we present CarbonCast, a machine-learningbased hierarchical approach that provides multi-day forecasts of the grid’s carbon intensity. CarbonCast uses neural networks to first generate production forecasts for all the electricity-generating sources. It then uses a hybrid CNN-LSTM approach to combine these first-tier forecasts with historical carbon intensity data and weather forecasts to generate a carbon intensity forecast for up to four days. Our results show that such a hierarchical design improves the robustness of the predictions against the uncertainty associated with a longer multi-day forecasting period. We also analyze which factors most influence the carbon intensity forecasts of any region with a specific mixture of electricity-generating sources. We show that CarbonCast’s 4-day forecasts have a MAPE of 4.80–13.93\% across six geographically distributed regions while outperforming state-of-the-art methods. Importantly, CarbonCast is the first opensourced tool for multi-day carbon intensity forecasts where the code and data are freely available to the research community.},
+	language = {en},
+	urldate = {2026-04-13},
+	booktitle = {Proceedings of the 9th {ACM} {International} {Conference} on {Systems} for {Energy}-{Efficient} {Buildings}, {Cities}, and {Transportation}},
+	publisher = {ACM},
+	author = {Maji, Diptyaroop and Shenoy, Prashant and Sitaraman, Ramesh K.},
+	month = nov,
+	year = {2022},
+	pages = {198--207},
+	file = {PDF:/Users/mathewjoseph/Zotero/storage/ZDJTDWI4/Maji et al. - 2022 - CarbonCast multi-day forecasting of grid carbon intensity.pdf:application/pdf},
+}
+
+@misc{iea_demand_report,
+	title = {Energy demand from {AI} – {Energy} and {AI} – {Analysis}},
+	url = {https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai},
+	abstract = {Energy and AI - Analysis and key findings. A report by the International Energy Agency.},
+	language = {en-GB},
+	urldate = {2026-04-13},
+	journal = {IEA},
+	file = {Snapshot:/Users/mathewjoseph/Zotero/storage/V9U7SAB8/energy-demand-from-ai.html:text/html},
+}
+
+@misc{google_power_usage_effectiveness,
+	title = {Power usage effectiveness},
+	url = {https://datacenters.google/efficiency},
+	abstract = {Google builds the most energy efficient data centers in the world.},
+	language = {en-US},
+	urldate = {2026-04-13},
+	journal = {Google Data Centers},
+	file = {Snapshot:/Users/mathewjoseph/Zotero/storage/J6JH2IIN/efficiency.html:text/html},
+}
+
+@misc{iea_ev_report,
+	title = {Outlook for energy demand – {Global} {EV} {Outlook} 2025 – {Analysis}},
+	url = {https://www.iea.org/reports/global-ev-outlook-2025/outlook-for-energy-demand},
+	abstract = {Global EV Outlook 2025 - Analysis and key findings. A report by the International Energy Agency.},
+	language = {en-GB},
+	urldate = {2026-04-13},
+	journal = {IEA},
+	file = {Snapshot:/Users/mathewjoseph/Zotero/storage/96QK6A5B/outlook-for-energy-demand.html:text/html},
+}
+
+@article{aslan_toward_2024,
+	title = {Toward climate neutral data centers: {Greenhouse} gas inventory, scenarios, and strategies},
+	volume = {28},
+	issn = {2589-0042},
+	shorttitle = {Toward climate neutral data centers},
+	url = {https://pmc.ncbi.nlm.nih.gov/articles/PMC11773490/},
+	doi = {10.1016/j.isci.2024.111637},
+	abstract = {The climate impact of data centers is expected to increase due to rising demand for information and communication technology services. At the same time, the European Union aims for climate neutral data centers by 2030. To map potential developments of emissions associated with data centers to the year 2030, we develop a generic data center greenhouse gas (GHG) inventory in accordance with the GHG protocol. Our results show that climate neutrality cannot be achieved by reduction measures only. We predict an increase in energy use for our illustrative Germany-based data center by 20\%, and an increase in the overall carbon footprint by 13\% between 2020 and 2030. Although operational measures and increased use of renewable electricity can decrease GHG emissions over the 2020 level by up to 70\%, achieving net zero inevitably requires mechanisms to mitigate and compensate emissions across the value chain., •We expect a 20\% increase in energy use and a 13\% rise in GHG emissions by 2030•High utilization rates and efficient infrastructure are highly effective measures•Renewable energy continues to be fundamental for achieving net-zero data centers•Refining GHG reporting metrics is essential for transparency for data centers, Information systems; Energy sustainability; Energy systems; Energy Modelling},
+	number = {1},
+	urldate = {2026-04-13},
+	journal = {iScience},
+	author = {Aslan, Tuğana and Holzapfel, Peter and Stobbe, Lutz and Grimm, Andreas and Nissen, Nils F. and Finkbeiner, Matthias},
+	month = dec,
+	year = {2024},
+	pages = {111637},
+	file = {Full Text PDF:/Users/mathewjoseph/Zotero/storage/59EWINPF/Aslan et al. - 2024 - Toward climate neutral data centers Greenhouse gas inventory, scenarios, and strategies.pdf:application/pdf},
+}
+
+@misc{hexatronic,
+	title = {The {Importance} of {Sustainable} {Data} {Centers}: {Why} {It} {Matters}},
+	shorttitle = {The {Importance} of {Sustainable} {Data} {Centers}},
+	url = {https://hexatronicdatacenter.com/en/knowledge/the-importance-of-sustainable-data-centers-why-it-matters-for-the-environment-and-your-organization},
+	abstract = {The need for sustainable data centers has become increasingly important as we strive to minimize our ecological footprint and combat climate change.},
+	language = {en},
+	urldate = {2026-04-13},
+	file = {Snapshot:/Users/mathewjoseph/Zotero/storage/CS8DMMSI/the-importance-of-sustainable-data-centers-why-it-matters-for-the-environment-and-your-organiza.html:text/html},
+}
+
+@inproceedings{maji_green_2024,
+	address = {New York, NY, USA},
+	series = {e-{Energy} '24},
+	title = {The {Green} {Mirage}: {Impact} of {Location}- and {Market}-based {Carbon} {Intensity} {Estimation} on {Carbon} {Optimization} {Efficacy}},
+	isbn = {979-8-4007-0480-2},
+	shorttitle = {The {Green} {Mirage}},
+	url = {https://dl.acm.org/doi/10.1145/3632775.3639587},
+	doi = {10.1145/3632775.3639587},
+	abstract = {In recent years, there has been an increased emphasis on reducing the carbon emissions from electricity consumption. Many organizations have set ambitious targets to reduce the carbon footprint of their operations as a part of their sustainability goals. The carbon footprint of any consumer of electricity is computed as the product of the total energy consumption and the carbon intensity of electricity. Third-party carbon information services provide information on carbon intensity across regions that consumers can leverage to modulate their energy consumption patterns to reduce their overall carbon footprint. In addition, to accelerate their decarbonization process, large electricity consumers increasingly acquire power purchase agreements (PPAs) from renewable power plants to obtain renewable energy credits that offset their “brown” energy consumption. There are primarily two methods for attributing carbon-free energy, or renewable energy credits, to electricity consumers: location-based and market-based. These two methods yield significantly different carbon intensity values for various consumers. As there is a lack of consensus which method to use for carbon-free attribution, a concurrent application of both approaches is observed in practice. In this paper, we show that such concurrent applications can cause discrepancies in the carbon savings reported by carbon optimization techniques. Our analysis across three state-of-the-art carbon optimization techniques shows possible overestimation of up to 55.1\% in the carbon reductions reported by the consumers and even increased emissions for consumers in some cases. We also find that carbon optimization techniques make different decisions under the market-based method and location-based method, and the market-based method can yield up to 28.2 \% less carbon savings than those claimed by the location-based method for consumers without PPAs.},
+	urldate = {2026-04-13},
+	booktitle = {Proceedings of the 15th {ACM} {International} {Conference} on {Future} and {Sustainable} {Energy} {Systems}},
+	publisher = {Association for Computing Machinery},
+	author = {Maji, Diptyaroop and Bashir, Noman and Irwin, David and Shenoy, Prashant and Sitaraman, Ramesh K},
+	month = may,
+	year = {2024},
+	pages = {256--267},
+	file = {Full Text PDF:/Users/mathewjoseph/Zotero/storage/TYCXBY9A/Maji et al. - 2024 - The Green Mirage Impact of Location- and Market-based Carbon Intensity Estimation on Carbon Optimiz.pdf:application/pdf},
+}
+
+@inproceedings{wiesner_lets_2021,
+	address = {Québec city Canada},
+	title = {Let's wait awhile: how temporal workload shifting can reduce carbon emissions in the cloud},
+	isbn = {978-1-4503-8534-3},
+	shorttitle = {Let's wait awhile},
+	url = {https://dl.acm.org/doi/10.1145/3464298.3493399},
+	doi = {10.1145/3464298.3493399},
+	abstract = {Depending on energy sources and demand, the carbon intensity of the public power grid fluctuates over time. Exploiting this variability is an important factor in reducing the emissions caused by data centers. However, regional differences in the availability of lowcarbon energy sources make it hard to provide general best practices for when to consume electricity. Moreover, existing research in this domain focuses mostly on carbon-aware workload migration across geo-distributed data centers, or addresses demand response purely from the perspective of power grid stability and costs.},
+	language = {en},
+	urldate = {2026-04-14},
+	booktitle = {Proceedings of the 22nd {International} {Middleware} {Conference}},
+	publisher = {ACM},
+	author = {Wiesner, Philipp and Behnke, Ilja and Scheinert, Dominik and Gontarska, Kordian and Thamsen, Lauritz},
+	month = dec,
+	year = {2021},
+	pages = {260--272},
+	file = {PDF:/Users/mathewjoseph/Zotero/storage/829RIBU9/Wiesner et al. - 2021 - Let's wait awhile how temporal workload shifting can reduce carbon emissions in the cloud.pdf:application/pdf},
+}
+
+@misc{wiesner_distributed_2026,
+	title = {Distributed {LLM} {Pretraining} {During} {Renewable} {Curtailment} {Windows}: {A} {Feasibility} {Study}},
+	shorttitle = {Distributed {LLM} {Pretraining} {During} {Renewable} {Curtailment} {Windows}},
+	url = {http://arxiv.org/abs/2602.22760},
+	doi = {10.48550/arXiv.2602.22760},
+	abstract = {Training large language models (LLMs) requires substantial compute and energy. At the same time, renewable energy sources regularly produce more electricity than the grid can absorb, leading to curtailment, the deliberate reduction of clean generation that would otherwise go to waste. These periods represent an opportunity: if training is aligned with curtailment windows, LLMs can be pretrained using electricity that is both clean and cheap. This technical report presents a system that performs full-parameter LLM training across geo-distributed GPU clusters during regional curtailment windows, elastically switching between local single-site training and federated multi-site synchronization as sites become available or unavailable. Our prototype trains a 561M-parameter transformer model across three clusters using the Flower federated learning framework, with curtailment periods derived from real-world marginal carbon intensity traces. Preliminary results show that curtailment-aware scheduling preserves training quality while reducing operational emissions to 5–12\% of single-site baselines.},
+	language = {en},
+	urldate = {2026-04-14},
+	publisher = {arXiv},
+	author = {Wiesner, Philipp and Becker, Soeren and Cornick, Brett and Scheinert, Dominik and Acker, Alexander and Kao, Odej},
+	month = feb,
+	year = {2026},
+	note = {arXiv:2602.22760 [cs]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Distributed, Parallel, and Cluster Computing},
+	file = {PDF:/Users/mathewjoseph/Zotero/storage/69HT9UTT/Wiesner et al. - 2026 - Distributed LLM Pretraining During Renewable Curtailment Windows A Feasibility Study.pdf:application/pdf},
+}
+
+@article{goldverg_towards_nodate,
+	title = {Towards {Carbon}-{Aware} {Data} {Transfers}},
+	abstract = {The growing adoption of cloud, edge, and distributed computing, as well as the rise in the use of AI/ML workloads, have created a signiﬁcant need to measure, monitor, and reduce the carbon emissions associated with these resource-intensive tasks. One signiﬁcant but often overlooked source of emissions is data transfers over wide-area networks (WANs), primarily due to the challenges in accurately measuring the carbon footprint of end-to-end network paths. We introduce a novel mechanism to measure network carbon footprints and propose strategies for optimizing the scheduling of network-intensive tasks. We show that users can achieve signiﬁcant carbon savings by shifting data transfer tasks across time and geographic regions based on local carbon intensity.},
+	language = {en},
+	author = {Goldverg, Jacob and Jamil, Hasibul and Rodrigues, Elvis and Kosar, Tevﬁk},
+	file = {PDF:/Users/mathewjoseph/Zotero/storage/3HFTZWIK/Goldverg et al. - Towards Carbon-Aware Data Transfers.pdf:application/pdf},
+}
+
+@misc{google_data_center_work_harder,
+	title = {Our data centers now work harder when the sun shines and wind blows},
+	url = {https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/data-centers-work-harder-sun-shines-wind-blows/},
+	abstract = {Today we’re announcing a carbon-intelligent computing platform, which can shift tasks to hours of the day when energy from cleaner power sources is plentiful.},
+	language = {en-us},
+	urldate = {2026-04-14},
+	journal = {Google},
+	month = apr,
+	year = {2020},
+	file = {Snapshot:/Users/mathewjoseph/Zotero/storage/S87RZ47N/data-centers-work-harder-sun-shines-wind-blows.html:text/html},
+}
+
+@inproceedings{sukprasert_limitations_2024,
+	title = {On the {Limitations} of {Carbon}-{Aware} {Temporal} and {Spatial} {Workload} {Shifting} in the {Cloud}},
+	url = {http://arxiv.org/abs/2306.06502},
+	doi = {10.1145/3627703.3650079},
+	abstract = {Cloud platforms have been focusing on reducing their carbon emissions by shifting workloads across time and locations to when and where low-carbon energy is available. Despite the prominence of this idea, prior work has only quantified the potential of spatiotemporal workload shifting in narrow settings, i.e., for specific workloads in select regions. In particular, there has been limited work on quantifying an upper bound on the ideal and practical benefits of carbon-aware spatiotemporal workload shifting for a wide range of cloud workloads. To address the problem, we conduct a detailed data-driven analysis to understand the benefits and limitations of carbon-aware spatiotemporal scheduling for cloud workloads. We utilize carbon intensity data from 123 regions, encompassing most major cloud sites, to analyze two broad classes of workloads -- batch and interactive -- and their various characteristics, e.g., job duration, deadlines, and SLOs. Our findings show that while spatiotemporal workload shifting can reduce workloads' carbon emissions, the practical upper bounds of these carbon reductions are currently limited and far from ideal. We also show that simple scheduling policies often yield most of these reductions, with more sophisticated techniques yielding little additional benefit. Notably, we also find that the benefit of carbon-aware workload scheduling relative to carbon-agnostic scheduling will decrease as the energy supply becomes "greener".},
+	urldate = {2026-04-14},
+	booktitle = {Proceedings of the {Nineteenth} {European} {Conference} on {Computer} {Systems}},
+	author = {Sukprasert, Thanathorn and Souza, Abel and Bashir, Noman and Irwin, David and Shenoy, Prashant},
+	month = apr,
+	year = {2024},
+	note = {arXiv:2306.06502 [cs]},
+	keywords = {Computer Science - Computers and Society, Computer Science - Distributed, Parallel, and Cluster Computing, Electrical Engineering and Systems Science - Systems and Control},
+	pages = {924--941},
+	file = {Full Text PDF:/Users/mathewjoseph/Zotero/storage/GNYPD63F/Sukprasert et al. - 2024 - On the Limitations of Carbon-Aware Temporal and Spatial Workload Shifting in the Cloud.pdf:application/pdf;Snapshot:/Users/mathewjoseph/Zotero/storage/YN8R9I8Y/2306.html:text/html},
+}
+
+@techreport{grid_observability,
+	title = {Grid observability for {Flexibility}},
+	url = {https://www.edsoforsmartgrids.eu/content/uploads/2024/05/20220513_TF1_ANM_-_Go4Flex_Report.pdf},
+	author = {{Ewa Mataczyńska} and {Juan Martí Rodríguez} and {Sjors van der Heijden} and {Jan Kula} and {Manolis Voumvoulakis}},
+}
+
+@inproceedings{yan_ensembleci_2025,
+	title = {{EnsembleCI}: {Ensemble} {Learning} for {Carbon} {Intensity} {Forecasting}},
+	shorttitle = {{EnsembleCI}},
+	url = {http://arxiv.org/abs/2505.01959},
+	doi = {10.1145/3679240.3734630},
+	abstract = {Carbon intensity (CI) measures the average carbon emissions generated per unit of electricity, making it a crucial metric for quantifying and managing the environmental impact. Accurate CI predictions are vital for minimizing carbon footprints, yet the state-of-the-art method (CarbonCast) falls short due to its inability to address regional variability and lack of adaptability. To address these limitations, we introduce EnsembleCI, an adaptive, end-to-end ensemble learning-based approach for CI forecasting. EnsembleCI combines weighted predictions from multiple sublearners, offering enhanced flexibility and regional adaptability. In evaluations across 11 regional grids, EnsembleCI consistently surpasses CarbonCast, achieving the lowest mean absolute percentage error (MAPE) in almost all grids and improving prediction accuracy by an average of 19.58\%. While performance still varies across grids due to inherent regional diversity, EnsembleCI reduces variability and exhibits greater robustness in long-term forecasting compared to CarbonCast and identifies region-specific key features, underscoring its interpretability and practical relevance. These findings position EnsembleCI as a more accurate and reliable solution for CI forecasting. EnsembleCI source code and data used in this paper are available at https://github.com/emmayly/EnsembleCI.},
+	urldate = {2026-04-14},
+	booktitle = {Proceedings of the 16th {ACM} {International} {Conference} on {Future} and {Sustainable} {Energy} {Systems}},
+	author = {Yan, Leyi and Wang, Linda and Liu, Sihang and Ding, Yi},
+	month = jun,
+	year = {2025},
+	note = {arXiv:2505.01959 [cs]},
+	keywords = {Computer Science - Machine Learning},
+	pages = {208--212},
+	file = {Full Text PDF:/Users/mathewjoseph/Zotero/storage/IYXRMDLN/Yan et al. - 2025 - EnsembleCI Ensemble Learning for Carbon Intensity Forecasting.pdf:application/pdf;Snapshot:/Users/mathewjoseph/Zotero/storage/HTRV682X/2505.html:text/html},
+}
+
+@inproceedings{zhang_gnn-based_2023,
+	address = {New York, NY, USA},
+	series = {e-{Energy} '23},
+	title = {A {GNN}-based {Day} {Ahead} {Carbon} {Intensity} {Forecasting} {Model} for {Cross}-{Border} {Power} {Grids}},
+	isbn = {979-8-4007-0032-3},
+	url = {https://dl.acm.org/doi/10.1145/3575813.3597346},
+	doi = {10.1145/3575813.3597346},
+	abstract = {Carbon intensity forecasting of power grids is critical to the optimization of demand-side consumers. Recently, cross-border power grids have emerged, i.e., those allowing electricity to be transmitted across different national transmission systems. Cross-border power grids substantially increase the sharing of highly variable renewable energy sources (VRE), leading to greater economic benefits and increased reliability. In Europe, the total volume of cross-border electricity that is exchanged comprises 13\% of the annual net electricity that is generated. Current studies on carbon intensity forecasting, however, apply to individual regional power grids. In cross-border grids, the carbon intensity of a regional grid depends not only on that of its own electricity but also on the carbon intensity from the electricity exchanged with cross-border grids. Thus, if the cross-border electricity exchange is not captured appropriately, significant forecasting errors can occur. In this paper, we formulate a new Carbon Intensity Forecasting for Cross-border Grids (CFCG) problem by proposing and integrating carbon flows generated by cross-border electricity exchanges. The challenge is to capture the complex spatial and temporal dependencies that are involved. We propose a CFCG model based on a Graph Neural Network (GNN) submodel to learn the spatial dependencies and a Long Short Term Memory (LSTM) submodel to learn the temporal dependencies. We evaluate the CFCG model using real-world data from the cross-border power grids in Europe involving 28 member countries. We compare five baseline models. Our results show that the CFCG model achieves an average improvement of 26.46\% or 20.34\% as compared to state-of-the-art forecasting models based on regional grids or one-hop neighbor grids, respectively.},
+	urldate = {2026-04-14},
+	booktitle = {Proceedings of the 14th {ACM} {International} {Conference} on {Future} {Energy} {Systems}},
+	publisher = {Association for Computing Machinery},
+	author = {Zhang, Xiaoyang and Wang, Dan},
+	month = jun,
+	year = {2023},
+	pages = {361--373},
+	file = {Full Text PDF:/Users/mathewjoseph/Zotero/storage/4WDII2BU/Zhang and Wang - 2023 - A GNN-based Day Ahead Carbon Intensity Forecasting Model for Cross-Border Power Grids.pdf:application/pdf},
+}
+
+@techreport{iea_electricity,
+	title = {Electricity 2025},
+	url = {https://iea.blob.core.windows.net/assets/7c671ef6-2947-4e87-beea-af0e1288e1d7/Electricity2025.pdf},
+	author = {{Eren Çam} and {Marc Casanovas} and {John Moloney}},
+	file = {PDF:/Users/mathewjoseph/Zotero/storage/3V6AA22G/Eren Çam et al. - Electricity 2025.pdf:application/pdf},
+}
+
+@article{harrell_concordance_1996,
+  title={Multivariable prognostic models: issues in developing models, evaluating assumptions and adequacy, and measuring and reducing errors},
+  author={Harrell Jr, Frank E and Lee, Kerry L and Mark, Daniel B},
+  journal={Statistics in medicine},
+  volume={15},
+  number={4},
+  pages={361--387},
+  year={1996},
+  publisher={Wiley Online Library}
+}
+
+@misc{ghg_protocol,
+  title={Greenhouse Gas Protocol},
+  author={{Greenhouse Gas Protocol}},
+  url={https://ghgprotocol.org/},
+  year={2025}
+}
+
+@incollection{ipcc_carbon_factors_2014,
+  title={Technology-specific cost and performance parameters [annex III]},
+  author={Bruckner, Thomas and others},
+  booktitle={Climate Change 2014: Mitigation of Climate Change},
+  year={2014},
+  pages={1329--1356}
+}
+
+@misc{kit_trace,
+  title={The KIT ForHLR II log},
+  author={{Parallel Workload Archive}},
+  url={https://www.cs.huji.ac.il/labs/parallel/workload/l_kit_fh2/index.html},
+  year={2025}
+}
+
+@article{lechowicz_learning_2025,
+  title={Learning-Augmented Competitive Algorithms for Spatiotemporal Online Allocation with Deadline Constraints},
+  author={Lechowicz, Adam and Christianson, Nicolas and Sun, Bo and Bashir, Noman and Hajiesmaili, Mohammad and Wierman, Adam and Shenoy, Prashant},
+  journal={Proceedings of the ACM on Measurement and Analysis of Computing Systems},
+  volume={9},
+  number={1},
+  pages={1--49},
+  year={2025}
+}
+
+@misc{statsmodels,
+  title={statsmodels.tsa.statespace.sarimax.SARIMAX},
+  author={{statsmodels}},
+  url={https://www.statsmodels.org/dev/generated/statsmodels.tsa.statespace.sarimax.SARIMAX.html},
+  year={2025}
 }
