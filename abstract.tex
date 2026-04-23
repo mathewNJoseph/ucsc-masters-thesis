@@ -1,1 +1,23 @@
-Abstract.
+% Original abstract (preserved for reference):
+% Over the past few years, electricity demand has accelerated due to the electrification of transportation, the proliferation of artificial intelligence (AI) and the rapid expansion of data center infrastructure.
+% Electricity grids have met this increase in demand by incorporating a heterogenous mix of energy sources, ie. coal, gas, solar and wind, each with different carbon intensity during generation.
+% While renewable energy sources have little to none carbon intensity during generation, they are inherently intermittent due to their reliance to the local weather and introduces temporal variability to the grid's carbon intensity.
+% To capitalize the periods of low carbon intensity in a grid, carbon-aware optimizers have been developed to determine the optimal temporal and spatial scheduling of jobs with the goal of minimizing the operational carbon footprint.
+% These optimizers require carbon forecasts that have extended prediction windows and high accuracy, which result in current forecasting models be trained on extensive historical datasets using computationally intensive hardware (e.g., GPUs).
+% We demonstrate that improvements to the accuracy of carbon forecasts do not correlate in better carbon optimization.
+% We argue instead that forecasting models should focus on the ordinal ranking among the predicted values relative to the ground truth -- a property quantified by the concordance metric -- to achieve the highest carbon optimality.
+% To show this, we created \textit{LiteCast}: a lightweight time-series carbon forecasting model designed to require less historical data, requires basic computation hardware, quickly provides a forecast, and focuses on concordance to improve carbon optimality.
+
+Electricity demand has been rising steadily, driven by the growth of electric vehicles, artificial intelligence, and data centers.
+To meet this demand, electricity grids draw from a mix of energy sources --- including fossil fuels and renewables --- each with different carbon emissions.
+Because renewable sources like wind and solar depend on the weather, the carbon intensity of the grid changes constantly over time and across regions.
+Carbon-aware scheduling takes advantage of these fluctuations by shifting workloads to times and places where the grid is cleaner, reducing their carbon footprint.
+
+To schedule effectively, optimizers depend on forecasts of future carbon intensity.
+Existing forecasting approaches have focused on being as accurate as possible, but it is not clear that a more accurate forecast actually leads to better scheduling outcomes.
+In this thesis, we argue that what matters for carbon-aware scheduling is not forecast accuracy, but \textit{concordance} --- the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
+A forecast that ranks time periods correctly will guide a scheduler to the lowest-emission windows, even if the predicted values are not precise.
+
+To demonstrate this, we present \textit{LiteCast}: a lightweight carbon intensity forecasting model that prioritizes concordance.
+LiteCast requires only a few days of historical data, runs on basic hardware, and can quickly adapt to changes in the electricity grid.
+Our evaluation across 50 regions worldwide and multiple real-world workloads shows that LiteCast achieves near-optimal carbon scheduling while outperforming state-of-the-art forecasters.
