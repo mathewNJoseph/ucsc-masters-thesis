@@ -1,1 +1,101 @@
-Introduction.
+% Original introduction (preserved for reference):
+% Electricity demand has been increasing at unprecedented rates, with projections indicating a compound annual rate of 3.6\% over 2026-2030 -- approximately 50\%  than that of the preceding decade \cite{iea_electricity}.
+% A significant contributor to this demand is the rapid expansion of datacenters, which current currently consume 1.5\% of global electricity and are projected to increase by 15\% annually through 2030, a rate four times greater than that of any other sector \cite{iea_demand_report}.
+% A significant driver for this growth is artificial intelligence (AI), with model training and inference taking up majority of the compute jobs.
+% Previous efforts for reducing carbon emissions centered on improving energy efficiency, measured through Power Usage Effectiveness (PUE).
+% By today's standard, most large datacenters are close to 1.0 PUE with Google reporting their large-scale data centers with a PUE of 1.09, suggesting server-level energy efficiency is approaching practical limits \cite{google_power_usage_effectiveness}.
+%
+% Electric vehicles (EVs) are achieving widespread adoption across households globally and are a growing workload on electricity grids.
+% EV charging consumed 180 TWhs in 2024, and is projected to triple by 2030, representing 2.5\% of the global electricity demand \cite{iea_ev_report}.
+% Given these trends, the imperative to achieve carbon efficiency has become increasingly urgent.
+% It is important to distinguish energy efficiency is not equivalent to carbon efficiency.
+% A highly energy-efficient workload operating on a carbon-intensive grid will not achieve carbon efficiency.
+% Conversely, a workload with poor energy efficiency running on a fully renewable grid is inherently carbon efficient, irrespective of its absolute energy consumption.
+%
+% An established mechanism for pursuing carbon efficiency is the use of carbon offset accounting, where certificates are purchased to fund the development clean energy infrastructure -- such as solar and wind projects -- and in return the purchaser will receive carbon offsets \cite{maji_green_2024}.
+% While this framework has supported electricity grids transition toward being more carbon efficient, it brings the challenge of managing the inherent intermittency of renewable energy.
+% Renewable energy, such as wind and solar, are highly dependant on the weather and thus controlling costs and planning to utilize this renewable energy requires high effort.
+%
+% To address this challenge, researchers have increasingly explored strategies to improve the carbon efficiency of workloads directly.
+% To reach a carbon-efficient outcome, coordinated efforts on both the supply and demand side of the electric system is required.
+% On the supply side, organizations can enter into power purchase agreements (PPAs) for renewable energy to power large-scale operations such as data centers \cite{maji_green_2024}.
+% On the demand side, techniques are being developed to modulate a workload's electricity consumption -- and consequently its carbon footprint -- by shifting execution to times and/or locations.
+% For instance, EV charging sessions can be rescheduled to coincide with periods of minimal grid carbon intensity, a strategy known as temporal shifting.
+% Cloud-based compute jobs are a workload that can exploit "spatial shifting", as it can be migrated across a geographically distributed cluster to access grids with the lowest carbon intensity.
+% The nature of the workload itself further influences the available optimization strategies.
+% A continuous workload, such as a stateful compute job, will execute for the duration of the job and cannot be shifted of interrupted during execution.
+% An interruptable workload, such as EV charging, can be paused and resumed during execution time without affecting the final outcome.
+% Temporal and spatial shifting, combined with the distinction between continuous and interruptible workloads, constitute the principal degrees of freedom that carbon-aware optimizers exploit to minimize operational carbon emissions \cite{aslan_toward_2024,google_data_center_work_harder,gsteiger_caribou_2024,souza_casper_2023,sukprasert_limitations_2024}.
+%
+% To achieve carbon optimality, workloads use a carbon-aware optimizer to make the temporal/spatial shifts to achieve carbon optimality.
+% These carbon-aware optimizers depend on carbon forecasts of grids to inform their decision-making \cite{grid_observability}.
+% Current state-of-the-art forecasting approaches construct data-intensive and computationally expensive neural networks to capture the complex dynamics of a grid's energy source mix  \cite{maji_carboncast_2022,yan_ensembleci_2025,zhang_gnn-based_2023}.
+% Although these models can achieve high accuracy in their forecasts, their effectiveness in scheduling workloads to be carbon optimal is not explored.
+% Moreover, the practical applicability of these models is constrained by their reliance on extensive historical training data and costly hardware requirements, rendering real-time, adaptive decision-making more complex and time-consuming in practice.
+% With electricity grids constantly evolving and changing their energy sources mix, it is critical to capture these changes when forecasting to make the best decision.
+% In this thesis, we propose utilizing an alternative evaluation metric -- concordance -- to assess the effectiveness of carbon intensity forecasts in the context of workload scheduling.
+% Concordance measures the degree to which the ordinal ranking of forecasted values preserves that of the realized carbon intensity observations.
+% We integrate this metric into our own carbon forecasting model, LiteCast.
+% LiteCast is a lightweight time-series model that aims for high concordance and optimal carbon scheduling.
+
+\section{The Growing Electricity Demand}
+
+Electricity demand has been increasing at unprecedented rates, with projections indicating a compound annual growth rate of 3.6\% over 2026--2030 --- approximately 50\% higher than that of the preceding decade \cite{iea_electricity}.
+A significant contributor to this demand is the rapid expansion of data centers, which currently consume 1.5\% of global electricity and are projected to grow by 15\% annually through 2030, a rate four times greater than that of any other sector \cite{iea_demand_report}.
+A primary driver of this growth is artificial intelligence (AI), with model training and inference consuming the majority of data center compute.
+Electric vehicles (EVs) are also a rapidly growing source of electricity demand, with EV charging consuming 180~TWh in 2024 and projected to triple by 2030, representing 2.5\% of global electricity demand \cite{iea_ev_report}.
+Together, these trends are placing unprecedented pressure on electricity grids and intensifying the need to address their environmental impact.
+
+\section{Energy Efficiency vs.\ Carbon Optimality}
+
+Previous efforts to reduce the environmental impact of computing have centered on improving energy efficiency, commonly measured through Power Usage Effectiveness (PUE).
+By today's standards, most large data centers operate close to the theoretical minimum, with Google reporting a PUE of 1.09 for its large-scale facilities \cite{google_power_usage_effectiveness}, suggesting that server-level energy efficiency is approaching its practical limits.
+
+Critically, high energy efficiency is not equal to high carbon optimality.
+A highly energy-efficient workload operating on a carbon-intensive grid will not achieve carbon optimality.
+Conversely, a workload with poor energy efficiency running on a fully renewable grid is inherently carbon optimal, irrespective of its absolute energy consumption.
+Given the diminishing returns of energy efficiency improvements, the imperative to pursue carbon optimality has become increasingly urgent.
+
+\section{Carbon-Aware Scheduling as a Path Forward}
+
+Electricity grids draw from a mix of energy sources --- fossil fuels, renewables, and low-carbon sources --- each with different carbon factors.
+The carbon intensity of the grid, measured in grams of CO\textsubscript{2} equivalent per kilowatt-hour (g$\cdot$CO\textsubscript{2}eq/kWh), fluctuates over time and across regions depending on which sources are generating power at any given moment.
+Carbon-aware optimizers exploit this variability by shifting workloads to times and locations where the carbon intensity is lowest, reducing their operational carbon footprint \cite{google_data_center_work_harder,gsteiger_caribou_2024,souza_casper_2023,sukprasert_limitations_2024}.
+
+Two principal strategies exist for achieving carbon-aware optimization.
+\textit{Temporal shifting} defers or interrupts a workload to coincide with periods of lower carbon intensity.
+\textit{Spatial shifting} migrates a workload across geographically distributed infrastructure to access regions with cleaner grids.
+The applicability of these strategies depends on the nature of the workload: a continuous workload must execute uninterrupted once started, while an interruptible workload can be paused and resumed without affecting its outcome.
+
+\section{The Role of Carbon Forecasting}
+
+Carbon-aware optimization requires planning ahead --- a scheduler must know when and where the carbon intensity will be lowest before a workload begins.
+This planning depends on carbon intensity forecasts, making accurate prediction a critical enabler of carbon-aware optimization \cite{grid_observability}.
+
+Previous forecasting efforts have focused on maximizing accuracy, minimizing error metrics such as mean absolute percentage error (MAPE) or root mean square error (RMSE).
+State-of-the-art approaches build data-intensive and computationally expensive neural networks to capture the complex dynamics of a grid's energy source mix \cite{maji_carboncast_2022,yan_ensembleci_2025,zhang_gnn-based_2023}.
+However, whether higher forecast accuracy actually produces better scheduling outcomes has not been examined.
+
+In this thesis, we show that what drives better scheduling decisions is not accuracy, but \textit{concordance} --- the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
+A scheduler that correctly identifies the lowest-carbon window --- even with imprecise predictions --- will achieve better carbon outcomes than one misled by a precisely wrong ordering.
+
+\section{Thesis Contributions}
+
+This thesis makes the following contributions:
+
+\begin{itemize}
+    \item \textbf{The concordance insight.} We demonstrate that improvements to forecast accuracy do not guarantee better carbon scheduling outcomes. What matters is concordance: a forecast that preserves the correct ordering of carbon intensity values over time will consistently guide a scheduler to the lowest-emission windows.
+
+    \item \textbf{LiteCast.} We present LiteCast, a lightweight carbon intensity forecasting model that prioritizes concordance. LiteCast requires less historical data than state-of-the-art models, runs on basic compute hardware, and adapts quickly to changes in the electricity grid.
+
+    \item \textbf{Empirical validation.} We evaluate LiteCast across 50 worldwide regions under a range of workloads --- including synthetic batch jobs, a real supercomputer cluster trace, and a real EV charging trace --- demonstrating near-optimal carbon scheduling performance.
+\end{itemize}
+
+\section{Thesis Organization}
+
+The remainder of this thesis is organized as follows.
+Chapter~\ref{chap:background} provides background on grid and carbon fundamentals and carbon-aware scheduling.
+Chapter~\ref{chap:methodology} formalizes the scheduling problem, introduces the concordance insight, and presents the LiteCast design.
+Chapter~\ref{chap:evaluation} evaluates LiteCast across 50 regions and real-world workloads.
+Chapter~\ref{chap:related} surveys related work in carbon intensity forecasting and carbon-aware scheduling.
+Chapter~\ref{chap:conclusion} concludes and discusses directions for future work.
