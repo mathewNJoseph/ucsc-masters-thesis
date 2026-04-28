@@ -9,13 +9,13 @@
 % To show this, we created \textit{LiteCast}: a lightweight time-series carbon forecasting model designed to require less historical data, requires basic computation hardware, quickly provides a forecast, and focuses on concordance to improve carbon optimality.
 
 Electricity demand has been rising steadily, driven by the growth of electric vehicles, artificial intelligence, and data centers.
-To meet this demand, electricity grids draw from a mix of energy sources --- including fossil fuels and renewables --- each with different carbon emissions.
-Because renewable sources like wind and solar depend on the weather, the carbon intensity of the grid changes constantly over time and across regions.
-Carbon-aware scheduling takes advantage of these fluctuations by shifting workloads to times and places where the grid is cleaner, reducing their carbon footprint.
+To meet this demand, electricity grids draw from a mix of energy sources, each with different carbon factors, whose combination determines the grid's hourly carbon intensity.
+Because renewable sources like wind and solar are inherently intermittent, they add a layer of variability to the grid's carbon intensity.
+Carbon-aware optimizers take advantage of these fluctuations by shifting workloads to times and places where the grid is cleaner (lowest carbon intensity), reducing their carbon footprint.
 
-To schedule effectively, optimizers depend on forecasts of future carbon intensity.
+To schedule effectively, these optimizers depend on forecasts of future carbon intensity.
 Existing forecasting approaches have focused on being as accurate as possible, but it is not clear that a more accurate forecast actually leads to better scheduling outcomes.
-In this thesis, we argue that what matters for carbon-aware scheduling is not forecast accuracy, but \textit{concordance} --- the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
+In this thesis, we argue that what matters for carbon-aware scheduling is not forecast accuracy, but \textit{concordance}: the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
 A forecast that ranks time periods correctly will guide a scheduler to the lowest-emission windows, even if the predicted values are not precise.
 
 To demonstrate this, we present \textit{LiteCast}: a lightweight carbon intensity forecasting model that prioritizes concordance.

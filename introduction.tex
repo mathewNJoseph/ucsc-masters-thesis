@@ -38,64 +38,32 @@
 % We integrate this metric into our own carbon forecasting model, LiteCast.
 % LiteCast is a lightweight time-series model that aims for high concordance and optimal carbon scheduling.
 
-\section{The Growing Electricity Demand}
-
-Electricity demand has been increasing at unprecedented rates, with projections indicating a compound annual growth rate of 3.6\% over 2026--2030 --- approximately 50\% higher than that of the preceding decade \cite{iea_electricity}.
+Electricity demand has been increasing at unprecedented rates, with projections indicating a compound annual growth rate of 3.6\% over 2026--2030, which is approximately 50\% higher than that of the preceding decade \cite{iea_electricity}.
 A significant contributor to this demand is the rapid expansion of data centers, which currently consume 1.5\% of global electricity and are projected to grow by 15\% annually through 2030, a rate four times greater than that of any other sector \cite{iea_demand_report}.
 A primary driver of this growth is artificial intelligence (AI), with model training and inference consuming the majority of data center compute.
 Electric vehicles (EVs) are also a rapidly growing source of electricity demand, with EV charging consuming 180~TWh in 2024 and projected to triple by 2030, representing 2.5\% of global electricity demand \cite{iea_ev_report}.
-Together, these trends are placing unprecedented pressure on electricity grids and intensifying the need to address their environmental impact.
-
-\section{Energy Efficiency vs.\ Carbon Optimality}
+Together, these trends are placing unprecedented pressure on electricity grids, intensifying the need to address their environmental impact.
 
 Previous efforts to reduce the environmental impact of computing have centered on improving energy efficiency, commonly measured through Power Usage Effectiveness (PUE).
-By today's standards, most large data centers operate close to the theoretical minimum, with Google reporting a PUE of 1.09 for its large-scale facilities \cite{google_power_usage_effectiveness}, suggesting that server-level energy efficiency is approaching its practical limits.
-
+PUE measures the ratio of total facility energy to IT equipment energy, where a value of 1.0 represents perfect efficiency.
+By today's standards, most large data centers operate close to this ideal, with Google reporting a PUE of 1.09 for its large-scale facilities \cite{google_power_usage_effectiveness}, suggesting that server-level energy efficiency is approaching its practical limits.
 Critically, high energy efficiency is not equal to high carbon optimality.
-A highly energy-efficient workload operating on a carbon-intensive grid will not achieve carbon optimality.
-Conversely, a workload with poor energy efficiency running on a fully renewable grid is inherently carbon optimal, irrespective of its absolute energy consumption.
+A highly energy-efficient workload operating on a carbon-intensive grid will not achieve carbon optimality, while a workload with poor energy efficiency running on a fully renewable grid is inherently carbon optimal.
 Given the diminishing returns of energy efficiency improvements, the imperative to pursue carbon optimality has become increasingly urgent.
 
-\section{Carbon-Aware Scheduling as a Path Forward}
-
-Electricity grids draw from a mix of energy sources --- fossil fuels, renewables, and low-carbon sources --- each with different carbon factors.
-The carbon intensity of the grid, measured in grams of CO\textsubscript{2} equivalent per kilowatt-hour (g$\cdot$CO\textsubscript{2}eq/kWh), fluctuates over time and across regions depending on which sources are generating power at any given moment.
+Electricity grids draw from a mix of energy sources, including fossil fuels, renewables, and low-carbon sources, each with different carbon factors.
+The carbon intensity of the grid fluctuates over time and across regions depending on which sources are generating power at any given moment.
 Carbon-aware optimizers exploit this variability by shifting workloads to times and locations where the carbon intensity is lowest, reducing their operational carbon footprint \cite{google_data_center_work_harder,gsteiger_caribou_2024,souza_casper_2023,sukprasert_limitations_2024}.
-
-Two principal strategies exist for achieving carbon-aware optimization.
-\textit{Temporal shifting} defers or interrupts a workload to coincide with periods of lower carbon intensity.
-\textit{Spatial shifting} migrates a workload across geographically distributed infrastructure to access regions with cleaner grids.
+Two principal strategies exist: \textit{temporal shifting}, which defers or interrupts a workload to coincide with periods of lower carbon intensity, and \textit{spatial shifting}, which migrates a workload to a region with a cleaner grid.
 The applicability of these strategies depends on the nature of the workload: a continuous workload must execute uninterrupted once started, while an interruptible workload can be paused and resumed without affecting its outcome.
+For example, a batch compute job is a continuous workload, while EV charging is an interruptible one.
 
-\section{The Role of Carbon Forecasting}
-
-Carbon-aware optimization requires planning ahead --- a scheduler must know when and where the carbon intensity will be lowest before a workload begins.
-This planning depends on carbon intensity forecasts, making accurate prediction a critical enabler of carbon-aware optimization \cite{grid_observability}.
-
-Previous forecasting efforts have focused on maximizing accuracy, minimizing error metrics such as mean absolute percentage error (MAPE) or root mean square error (RMSE).
-State-of-the-art approaches build data-intensive and computationally expensive neural networks to capture the complex dynamics of a grid's energy source mix \cite{maji_carboncast_2022,yan_ensembleci_2025,zhang_gnn-based_2023}.
+Carbon-aware optimization requires planning ahead, as a scheduler must know when and where the carbon intensity will be lowest before a workload begins.
+This planning depends on carbon intensity forecasts, making forecasting a critical enabler of carbon-aware optimization \cite{grid_observability}.
+Previous forecasting efforts have focused on maximizing accuracy by minimizing error metrics such as mean absolute percentage error (MAPE), building data-intensive and computationally expensive neural networks \cite{maji_carboncast_2022,yan_ensembleci_2025,zhang_gnn-based_2023}.
 However, whether higher forecast accuracy actually produces better scheduling outcomes has not been examined.
 
-In this thesis, we show that what drives better scheduling decisions is not accuracy, but \textit{concordance} --- the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
-A scheduler that correctly identifies the lowest-carbon window --- even with imprecise predictions --- will achieve better carbon outcomes than one misled by a precisely wrong ordering.
-
-\section{Thesis Contributions}
-
-This thesis makes the following contributions:
-
-\begin{itemize}
-    \item \textbf{The concordance insight.} We demonstrate that improvements to forecast accuracy do not guarantee better carbon scheduling outcomes. What matters is concordance: a forecast that preserves the correct ordering of carbon intensity values over time will consistently guide a scheduler to the lowest-emission windows.
-
-    \item \textbf{LiteCast.} We present LiteCast, a lightweight carbon intensity forecasting model that prioritizes concordance. LiteCast requires less historical data than state-of-the-art models, runs on basic compute hardware, and adapts quickly to changes in the electricity grid.
-
-    \item \textbf{Empirical validation.} We evaluate LiteCast across 50 worldwide regions under a range of workloads --- including synthetic batch jobs, a real supercomputer cluster trace, and a real EV charging trace --- demonstrating near-optimal carbon scheduling performance.
-\end{itemize}
-
-\section{Thesis Organization}
-
-The remainder of this thesis is organized as follows.
-Chapter~\ref{chap:background} provides background on grid and carbon fundamentals and carbon-aware scheduling.
-Chapter~\ref{chap:methodology} formalizes the scheduling problem, introduces the concordance insight, and presents the LiteCast design.
-Chapter~\ref{chap:evaluation} evaluates LiteCast across 50 regions and real-world workloads.
-Chapter~\ref{chap:related} surveys related work in carbon intensity forecasting and carbon-aware scheduling.
-Chapter~\ref{chap:conclusion} concludes and discusses directions for future work.
+In this thesis, we show that what drives better scheduling decisions is not accuracy, but \textit{concordance}: the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
+A scheduler that correctly identifies the lowest-carbon window will achieve better carbon outcomes, even if the predicted values are not precise.
+To demonstrate this, we present \textit{LiteCast}, a lightweight carbon intensity forecasting model that prioritizes concordance, requires less historical data than state-of-the-art models, runs on basic compute hardware, and adapts quickly to changes in the electricity grid.
+We evaluate LiteCast across 50 regions worldwide under a range of workloads (including synthetic batch jobs, a real supercomputer cluster trace, and a real EV charging trace), demonstrating near-optimal carbon scheduling performance.
