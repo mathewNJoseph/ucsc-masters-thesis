@@ -2,6 +2,7 @@
 % Background. test
 
 \section{Grid and Carbon Fundamentals}
+% Question: how are the figure descriptions
 
 \subsection{How Carbon Intensity is Calculated}
 
@@ -10,12 +11,20 @@ This metric captures the amount of greenhouse gas emitted per unit of electricit
 Each energy source carries a distinct carbon factor, defined as the amount of CO\textsubscript{2}eq emitted per kWh of electricity it produces.
 Carbon factors are calculated per energy source by the Intergovernmental Panel on Climate Change (IPCC) and represent the direct emissions from the operational generation of electricity \cite{ipcc_carbon_factors_2014}.
 
-Two common signals are used to quantify the carbon intensity of grid electricity \cite{sukprasert_limitations_2024}.
+The GHG Protocol categorizes emissions into three scopes based on their source \cite{ghg_protocol}.
+\textit{Scope 1} covers direct emissions from sources owned or controlled by the reporting entity, such as on-site fuel combustion or company-operated vehicles.
+\textit{Scope 2} covers indirect emissions from the generation of purchased electricity, heat, or steam consumed by the entity.
+\textit{Scope 3} covers all other indirect emissions across the value chain, including embodied emissions from equipment manufacturing, transportation, and supply chain activities.
+This thesis focuses on Scope 2 emissions, as carbon-aware scheduling targets the carbon intensity of the electricity that workloads consume.
+Scope 1 emissions are constrained by fixed infrastructure decisions, while Scope 3 emissions are largely embodied in hardware that has already been manufactured and represent a sunk carbon cost that runtime scheduling cannot recover \cite{bashir_sunk_2024}.
+Operational Scope 2 emissions are therefore the only component that scheduling decisions can meaningfully modulate.
+
+Within Scope 2, two common signals are used to quantify the carbon intensity of grid electricity \cite{sukprasert_limitations_2024}.
 The \textit{average carbon intensity} is the weighted average of the carbon factors of all generators currently supplying electricity to the grid, where each source is weighted by its share of total generation.
 The \textit{marginal carbon intensity} represents the carbon factor of the specific generator that responds to the last incremental unit of demand.
 Because not all generators respond equally to changes in demand, only the marginal generator is credited with the emissions associated with added consumption.
 Although marginal intensity more precisely captures the impact of an additional unit of demand, it is highly volatile and difficult to observe in real time.
-The average intensity signal, by contrast, is stable and directly observable from publicly reported generation data, and is the signal required for Scope 2 greenhouse gas reporting under the GHG Protocol \cite{ghg_protocol}.
+The average intensity signal, by contrast, is stable and directly observable from publicly reported generation data, and is the signal required for Scope 2 reporting under the GHG Protocol.
 Consistent with prior work \cite{maji_carboncast_2022,yan_ensembleci_2025,zhang_gnn-based_2023}, this thesis focuses on average carbon intensity.
 
 The average carbon intensity of a region at a given time is computed as:
@@ -27,30 +36,74 @@ The resulting carbon intensity reflects the instantaneous emissions profile of t
 
 \subsection{Energy Source Mix}
 
+
 An electricity grid draws from a portfolio of generation sources that differ in their carbon factors, dispatchability, and cost.
-These sources fall into three broad categories: fossil fuels, renewables, and low-carbon sources.
+These sources fall into two broad categories: carbon-intensive fossil fuels and low-carbon sources, which include renewables and nuclear power.
 
-Fossil fuels, primarily coal and natural gas, carry high carbon factors.
-Coal is among the most carbon-intensive sources, emitting approximately 820~g$\cdot$CO\textsubscript{2}eq/kWh, while natural gas emits roughly 490~g$\cdot$CO\textsubscript{2}eq/kWh \cite{ipcc_carbon_factors_2014}.
-Despite their environmental cost, fossil fuels are highly dispatchable: operators can increase or decrease their output on demand, making them a reliable tool for balancing supply and demand.
+The carbon emissions associated with an energy source can be measured along two timelines.
+\textit{Operational emissions} are released during the generation of electricity itself, primarily from fuel combustion or process emissions at the plant.
+\textit{Lifecycle emissions} include operational emissions together with those from upstream and downstream activities: raw material extraction, plant construction, fuel transport, and decommissioning or waste handling.
+Every source carries both, and even sources with zero operational emissions accumulate non-trivial lifecycle emissions through these activities.
+This thesis characterizes grid carbon intensity using operational emissions for two reasons: only operational emissions vary at the timescales runtime scheduling can act on, and lifecycle emissions are largely sunk costs already incurred when the plant was built.
+Table~\ref{tab:bg-emissions} lists median operational and lifecycle carbon factors for major electricity sources.
 
-Renewable sources, including wind, solar, and hydropower, have near-zero direct carbon factors.
-Solar photovoltaic systems emit approximately 41~g$\cdot$CO\textsubscript{2}eq/kWh and onshore wind approximately 11~g$\cdot$CO\textsubscript{2}eq/kWh over their lifecycle \cite{ipcc_carbon_factors_2014}.
-Unlike fossil fuels, however, wind and solar are non-dispatchable: their output depends entirely on prevailing weather conditions and cannot be controlled by grid operators.
-Hydropower is partially dispatchable, as reservoir levels can be managed to modulate output, but is subject to longer-term seasonal constraints.
+\begin{table}[h]
+    \centering
+    \caption{Median operational and lifecycle carbon factors for major electricity sources, drawn from IPCC AR5 Annex~III \cite{ipcc_carbon_factors_2014}.}
+    \label{tab:bg-emissions}
+    \begin{tabular}{lrr}
+    \hline
+    Source & Operational (g$\cdot$CO\textsubscript{2}eq/kWh) & Lifecycle (g$\cdot$CO\textsubscript{2}eq/kWh) \\
+    \hline
+    Coal (pulverized) & 760 & 820 \\
+    Natural gas (combined cycle) & 370 & 490 \\
+    Nuclear & 0 & 12 \\
+    Hydropower & 0 & 24 \\
+    Solar PV (utility) & 0 & 48 \\
+    Wind onshore & 0 & 11 \\
+    Wind offshore & 0 & 12 \\
+    \hline
+    \end{tabular}
+\end{table}
 
-Low-carbon sources include nuclear power and battery storage.
-Nuclear power produces approximately 12~g$\cdot$CO\textsubscript{2}eq/kWh and provides stable, dispatchable baseload generation.
-Battery storage systems have near-zero direct emissions and serve primarily as a buffer, storing excess generation from renewables and discharging during periods of high demand.
+Fossil fuels, primarily coal and natural gas, carry high carbon factors at every stage of their lifecycle.
+Coal emits approximately 760~g$\cdot$CO\textsubscript{2}eq/kWh during operation, with mining and transport adding further to its lifecycle footprint; coal remains valued as a baseload source because its output is continuously available regardless of weather or demand.
+Natural gas emits roughly 370~g$\cdot$CO\textsubscript{2}eq/kWh during operation and has a similarly extractive supply chain, but its prices and availability are tightly tied to global politics.
+Despite their environmental cost, both are highly dispatchable: operators can increase or decrease their output on demand, making them reliable tools for balancing supply and demand.
+
+Zero-carbon sources, including wind, solar, hydropower, and nuclear, emit no direct carbon during operation, but each carries lifecycle emissions from the manufacturing, construction, or extraction activities that precede generation.
+Solar panels and wind turbines require energy-intensive manufacturing of silicon, rare-earth metals, and structural components, though their long operational lifespans typically amortize these emissions over time.
+Wind and solar are also non-dispatchable: their output depends entirely on prevailing weather conditions and cannot be controlled by grid operators.
+Hydropower is partially dispatchable through reservoir management but is subject to seasonal water availability, and constructing a dam requires flooding large natural habitats.
+Nuclear power is fully dispatchable and provides stable baseload generation that is insensitive to weather; its lifecycle emissions are driven primarily by uranium mining, processing, and long-term waste handling, but its extreme energy density means small fuel quantities yield large amounts of electricity.
+However, nuclear is geographically uncommon: in the United States, only 28 of 50 states host commercial nuclear reactors \cite{eia_nuclear}, limiting its contribution to most regional grids.
 
 Each regional grid is managed by a balancing authority, which is responsible for continuously matching electricity supply with demand in real time.
 The carbon intensity of a grid at any moment is determined by which generators the balancing authority has dispatched to meet current demand.
-Regions with a high share of renewables and nuclear in their generation mix, such as France (approximately 70\% nuclear) or Sweden (dominated by hydro and nuclear), have persistently low carbon intensity.
-Regions that rely heavily on coal and gas, such as parts of the United States Midwest or Poland, maintain high carbon intensity.
+The composition of these portfolios varies dramatically across regions, as illustrated in Figure~\ref{fig:bg-energy-source}.
+Regions with a high share of renewables and nuclear in their generation mix, such as France (approximately 70\% nuclear) or Sweden (dominated by hydro and nuclear), have persistently low carbon intensity, while regions that rely heavily on coal and gas, such as parts of the United States Midwest or Poland, maintain high carbon intensity.
 
-% TODO: Insert Figure -- spatial variability bar chart (carbon intensity by region, sorted by yearly average)
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/background/energy_source_background.pdf}
+    \caption{Energy source breakdown, illustrating the diversity in energy production per grid}
+    % \caption{Generation source breakdowns for representative grids, illustrating how regional portfolios differ in their reliance on fossil fuels, renewables, and low-carbon sources.}
+    \label{fig:bg-energy-source}
+\end{figure}
+
+Per-source generation, demand, and weather data are published hourly by the balancing authorities that manage each grid.
+In the United States, this data is queryable through the Energy Information Administration's (EIA) Hourly Electric Grid Monitor \cite{eia_data}, while in Europe, the European Network of Transmission System Operators for Electricity (ENTSO-E) provides equivalent coverage through its Transparency Platform \cite{entsoe_data}.
+This thesis draws on both sources to characterize grid behavior and to train and evaluate carbon intensity forecasts.
 
 \subsection{Temporal and Spatial Variability}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/background/energy_weather_variance_tmp.pdf}
+    \caption{Variance of wind energy, solar energy, demand and temperature impacting carbon intensity in California}
+    % \caption{Hourly solar generation, wind generation, demand, temperature, and carbon intensity in California. Solar follows a clean daily arc, wind fluctuates irregularly, and demand follows its own diurnal rhythm; the carbon intensity dips at midday when solar displaces fossil fuel generation and rises in the evening as solar falls and demand remains high.}
+    \label{fig:bg-energy-variance}
+\end{figure}
 
 Carbon intensity is not static: it varies continuously as the generation mix shifts in response to demand, weather, and grid conditions.
 This variability operates across two dimensions, temporal and spatial, and understanding both is essential for effective carbon-aware scheduling.
@@ -60,37 +113,55 @@ Electricity demand follows predictable diurnal rhythms tied to human behavior: d
 During periods of high demand, grid operators dispatch additional generators to maintain supply, often relying on carbon-intensive peaking units such as natural gas turbines, which temporarily elevates carbon intensity.
 Renewable generation adds a second layer of temporal variability.
 Solar output follows a strict daily cycle, peaking around midday and dropping to zero at night.
-In regions with high solar penetration, such as California, this creates a pronounced mid-day dip in carbon intensity as solar displaces fossil fuel generation, followed by a rise in the evening as solar output falls and demand remains high.
 Wind generation is less predictable, varying over hours and days depending on local and regional weather patterns.
-Seasonal effects compound these daily cycles: solar irradiance is lower in winter, heating demand rises in cold months, and wind patterns shift between seasons, each affecting the generation mix and the resulting carbon intensity.
+Figure~\ref{fig:bg-energy-variance} illustrates these dynamics in California: solar generation traces a clean daily arc, wind generation fluctuates irregularly across hours, and demand follows its own diurnal rhythm that does not align with either source.
+The resulting interaction is visible in the same figure as a pronounced mid-day dip in carbon intensity, when solar displaces fossil fuel generation, followed by a rise in the evening as solar output falls and demand remains high.
+Seasonal effects compound these daily cycles: sunshine is lower in winter, heating demand rises in cold months, and wind patterns shift between seasons, each affecting the generation mix and the resulting carbon intensity.
 Weather also affects demand directly: temperature extremes drive energy consumption for heating and cooling, which is frequently met by carbon-intensive peaking units, raising carbon intensity during heat waves and cold snaps.
 
 \textit{Spatial variability} reflects the fundamental differences in generation infrastructure across regions.
-Carbon intensity can vary by more than 10$\times$ between the cleanest and most carbon-intensive grids worldwide.
-For instance, France's nuclear-heavy grid maintains an average carbon intensity near 60~g$\cdot$CO\textsubscript{2}eq/kWh, while coal-dependent regions such as Montana or Poland average above 600~g$\cdot$CO\textsubscript{2}eq/kWh.
+Figure~\ref{fig:bg-spatial-ci} shows the distribution of hourly carbon intensity across a representative set of regional grids worldwide, sorted from cleanest to most carbon-intensive.
+Carbon intensity varies by roughly 25$\times$ between the cleanest and most carbon-intensive grids: France's nuclear-heavy grid maintains an average carbon intensity near 25~g$\cdot$CO\textsubscript{2}eq/kWh, while coal-dependent regions such as Poland or the Seychelles average above 600~g$\cdot$CO\textsubscript{2}eq/kWh.
 Even within a single country, carbon intensity varies significantly between regions: California's grid, with a high share of solar and wind, is substantially cleaner than the coal-heavy Midwest.
 
-% TODO: Insert Figure -- temporal variability line plot (hourly CI over a 7-day window for representative regions)
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/background/background_loc_ci_all_thesis.pdf}
+    \caption{Averaged carbon intensities across grids worldwide}
+    % \caption{Distribution of hourly carbon intensity across regional grids worldwide, sorted from cleanest to most carbon-intensive. Carbon intensity varies by roughly 25$\times$ across regions, driven by differences in each grid's generation mix.}
+    \label{fig:bg-spatial-ci}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/background/temporal_background.pdf}
+    \caption{Carbon intensities varying within a day and across a week}
+    % \caption{Average carbon intensity across regions worldwide, sorted from cleanest to most carbon-intensive. Carbon intensity varies by more than an order of magnitude depending on the regional generation mix.}
+    \label{fig:bg-temporal-ci}
+\end{figure}
 
 \subsection{Intermittency of Renewable Energy}
 
-Wind and solar energy are inherently intermittent: they generate electricity only when weather conditions permit and their output cannot be controlled by grid operators.
-Unlike coal or gas plants, which can be ramped up or shut down on demand, renewable generators are non-dispatchable.
+Wind and solar energy are inherently intermittent: they generate electricity only when weather conditions permit, and how much they output cannot be controlled by grid operators, except when supply exceeds demand and the excess output is shed through curtailment.
+Unlike coal or gas plants, which can be ramped up or shut down on demand, renewable generators cannot be ramped up at will: operators can only reduce output below what the weather allows, never increase it.
 A sudden drop in wind speed or an overcast sky can cause renewable output to fall within minutes, forcing the grid to compensate with fast-ramping fossil fuel generators.
-This non-dispatchability is a fundamental physical constraint of renewable generation.
+This asymmetry, where output can be capped but not raised, is a fundamental physical constraint of renewable generation.
 
 As electricity grids integrate higher shares of renewables to reduce their carbon footprint, this intermittency becomes an increasingly important source of carbon intensity variability.
-Grids with high renewable penetration, such as Denmark (dominated by wind) or Texas (significant wind capacity), exhibit large and rapid swings in carbon intensity that are difficult to predict.
+Grids with high renewable penetration, such as Denmark or Texas, exhibit large and rapid swings in carbon intensity that are difficult to predict, as illustrated in Figure~\ref{fig:bg-temporal-ci}.
 The variability in these regions is substantially higher than in grids anchored by stable baseload sources such as nuclear or hydro.
 
 This layered uncertainty, from weather conditions to renewable output to carbon intensity, makes precise long-horizon carbon intensity forecasting inherently difficult.
 A forecaster must anticipate not only how demand will evolve but also how wind speeds and solar irradiance will change, and how the grid will respond to those conditions.
+Compounding this challenge, renewable capacity is expanding rapidly: in the United States, the EIA projects 43.4~GW of new utility-scale solar capacity in 2026 (a 60\% increase over 2025) and 11.8~GW of new wind capacity (more than double the prior year), with renewables and battery storage together accounting for nearly 80\% of new generating capacity \cite{eia_capacity_2026}.
+As new generators come online, the underlying generation mix shifts continuously, meaning forecasting models trained on long historical windows risk becoming stale as the grid they were trained on no longer reflects the grid that exists today.
 This motivates the need for forecasting approaches that are adaptive to changing grid conditions rather than reliant solely on historical patterns learned from large datasets.
 
 \section{Carbon-Aware Scheduling}
 
 \subsection{Types of Electrical Loads}
 
+% TODO: idk if this sentence is fully correct
 An electrical load is considered flexible when it can adapt its consumption pattern in response to the availability of low-carbon electricity.
 Flexibility has two independent dimensions: temporal and spatial.
 
@@ -100,7 +171,6 @@ A \textit{continuous} load must run uninterrupted from start to finish once it b
 Examples include aluminum smelting, AI model training, and batch scientific computing jobs.
 An \textit{interruptible} load can be paused and resumed at any point without affecting its outcome, provided it completes the required total amount of work within a deadline.
 EV charging is a canonical example: a vehicle must receive a target charge by a certain time, but the individual charging sessions can be distributed across that window in any pattern.
-Residential appliances such as dishwashers and washing machines are similarly interruptible.
 
 \textit{Spatial flexibility} is the ability of a load to shift its execution to a different geographic location.
 Spatially flexible loads can migrate across multiple sites, each connected to a different regional grid with a potentially different carbon intensity.
@@ -137,15 +207,21 @@ To schedule a workload at the optimal time or location, an optimizer must know w
 This planning requires forecasts: without a look-ahead window of future carbon intensity, a scheduler cannot identify the best execution window and must resort to reacting to current conditions rather than anticipating future ones \cite{grid_observability}.
 Carbon intensity forecasting is therefore a critical enabler of carbon-aware optimization.
 
-Effective forecasting must provide predictions over the full scheduling horizon of the workload, which can range from a few hours for short batch jobs to multiple days for long-running AI training workloads with large deadline slack.
+Effective forecasting must provide predictions over the full \textit{window length} of the workload, defined as the interval within which the job must both start and finish.
+The window length is the sum of the workload's intrinsic runtime and the slack the user is willing to tolerate before completion:
+\begin{equation}
+    L_{\text{window}} = L_{\text{job}} + L_{\text{slack}}
+\end{equation}
+where $L_{\text{job}}$ is the time required to execute the workload and $L_{\text{slack}}$ is the additional flexibility the user grants the scheduler to defer execution.
+Window lengths can range from a few hours for short batch jobs to multiple days for long-running AI training workloads with large deadline slack.
 Current state-of-the-art forecasting approaches build complex neural network models to capture the spatiotemporal dynamics of the grid's energy source mix.
 CarbonCast \cite{maji_carboncast_2022} uses a two-tier hierarchical approach: a first tier of neural networks generates production forecasts for each individual energy source, and a second tier combines these with historical carbon data and weather forecasts using a CNN-LSTM architecture to produce multi-day carbon intensity forecasts up to 96 hours ahead.
 EnsembleCI \cite{yan_ensembleci_2025} extends this approach by combining multiple sub-learner models through ensemble learning, selecting the best predictor per region to improve accuracy and reduce variability across regions.
 Zhang and Wang \cite{zhang_gnn-based_2023} apply graph neural networks to model the spatial dependencies between cross-border grids in Europe, capturing how electricity exchanges between neighboring countries affect each region's carbon intensity.
 
-These models achieve strong accuracy results, with CarbonCast reporting a MAPE of 4.80--13.93\% across multiple regions.
+These models achieve strong accuracy results, with CarbonCast reporting a MAPE (Mean Absolute Percentage Error) of 4.80--13.93\% across multiple regions.
 However, they share two important limitations.
-First, they require large volumes of historical energy, weather, and carbon data to train effectively, often spanning multiple years, and depend on significant computational resources.
+First, they require large volumes of historical energy, weather, and carbon data to train effectively, often spanning a year or more, and depend on significant computational resources.
 This makes them difficult to deploy in regions with limited data availability and costly to retrain when grid conditions change.
 Second, and more fundamentally, their effectiveness for carbon-aware scheduling has not been evaluated.
-These models are optimized to minimize forecasting error metrics such as MAPE, but whether lower MAPE actually translates to better scheduling outcomes, and what property of a forecast is most consequential for scheduling, remains an open question that this thesis addresses.
+These models are optimized to minimize forecasting error metrics such as MAPE, but whether a lower MAPE actually translates to better scheduling outcomes, and what property of a forecast is most consequential for scheduling, remains an open question that this thesis addresses.
