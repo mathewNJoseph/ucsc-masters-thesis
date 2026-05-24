@@ -2,6 +2,7 @@
 % Background. test
 
 \section{Grid and Carbon Fundamentals}
+\label{sec:background-fundamentals}
 % Question: how are the figure descriptions
 
 \subsection{How Carbon Intensity is Calculated}
@@ -55,13 +56,16 @@ Table~\ref{tab:bg-emissions} lists median operational and lifecycle carbon facto
     \hline
     Source & Operational (g$\cdot$CO\textsubscript{2}eq/kWh) & Lifecycle (g$\cdot$CO\textsubscript{2}eq/kWh) \\
     \hline
-    Coal (pulverized) & 760 & 820 \\
-    Natural gas (combined cycle) & 370 & 490 \\
+    Coal & 760 & 820 \\
+    Oil & 406 & 650 \\
+    Natural gas & 370 & 490 \\
     Nuclear & 0 & 12 \\
     Hydropower & 0 & 24 \\
-    Solar PV (utility) & 0 & 48 \\
-    Wind onshore & 0 & 11 \\
-    Wind offshore & 0 & 12 \\
+    Solar & 0 & 48 \\
+    Wind & 0 & 11 \\
+    Other & 575 & 700 \\ 
+    Biomass & 0 & 230 \\
+    Geothermal & 0 & 38 \\
     \hline
     \end{tabular}
 \end{table}
@@ -112,7 +116,7 @@ This variability operates across two dimensions, temporal and spatial, and under
 Electricity demand follows predictable diurnal rhythms tied to human behavior: demand is lowest overnight, rises sharply in the morning as households and businesses come online, and peaks in the early evening when both commercial and residential activity are at their highest.
 During periods of high demand, grid operators dispatch additional generators to maintain supply, often relying on carbon-intensive peaking units such as natural gas turbines, which temporarily elevates carbon intensity.
 Renewable generation adds a second layer of temporal variability.
-Solar output follows a strict daily cycle, peaking around midday and dropping to zero at night.
+Solar output follows a predictable daily cycle, peaking around midday and dropping to zero at night, though unexpected weather such as cloud cover can introduce variability and intermittency.
 Wind generation is less predictable, varying over hours and days depending on local and regional weather patterns.
 Figure~\ref{fig:bg-energy-variance} illustrates these dynamics in California: solar generation traces a clean daily arc, wind generation fluctuates irregularly across hours, and demand follows its own diurnal rhythm that does not align with either source.
 The resulting interaction is visible in the same figure as a pronounced mid-day dip in carbon intensity, when solar displaces fossil fuel generation, followed by a rise in the evening as solar output falls and demand remains high.
@@ -207,21 +211,23 @@ To schedule a workload at the optimal time or location, an optimizer must know w
 This planning requires forecasts: without a look-ahead window of future carbon intensity, a scheduler cannot identify the best execution window and must resort to reacting to current conditions rather than anticipating future ones \cite{grid_observability}.
 Carbon intensity forecasting is therefore a critical enabler of carbon-aware optimization.
 
-Effective forecasting must provide predictions over the full \textit{window length} of the workload, defined as the interval within which the job must both start and finish.
-The window length is the sum of the workload's intrinsic runtime and the slack the user is willing to tolerate before completion:
+Effective forecasting must provide predictions over the full \textit{window length} of the job, defined as the interval within which the job must both start and finish.
+Let $\mathcal{J}$ denote a job submitted to the scheduler.
+The window length $\mathcal{J}_{\text{window}}$ is the sum of the job's intrinsic runtime $\mathcal{J}_{\text{length}}$ and the slack $\mathcal{J}_{\text{slack}}$ the user is willing to tolerate before completion:
 \begin{equation}
-    L_{\text{window}} = L_{\text{job}} + L_{\text{slack}}
+    \mathcal{J}_{\text{window}} = \mathcal{J}_{\text{length}} + \mathcal{J}_{\text{slack}}
 \end{equation}
-where $L_{\text{job}}$ is the time required to execute the workload and $L_{\text{slack}}$ is the additional flexibility the user grants the scheduler to defer execution.
+where $\mathcal{J}_{\text{length}}$ is the time required to execute the job and $\mathcal{J}_{\text{slack}}$ is the additional flexibility the user grants the scheduler to defer execution.
 Window lengths can range from a few hours for short batch jobs to multiple days for long-running AI training workloads with large deadline slack.
 Current state-of-the-art forecasting approaches build complex neural network models to capture the spatiotemporal dynamics of the grid's energy source mix.
 CarbonCast \cite{maji_carboncast_2022} uses a two-tier hierarchical approach: a first tier of neural networks generates production forecasts for each individual energy source, and a second tier combines these with historical carbon data and weather forecasts using a CNN-LSTM architecture to produce multi-day carbon intensity forecasts up to 96 hours ahead.
-EnsembleCI \cite{yan_ensembleci_2025} extends this approach by combining multiple sub-learner models through ensemble learning, selecting the best predictor per region to improve accuracy and reduce variability across regions.
-Zhang and Wang \cite{zhang_gnn-based_2023} apply graph neural networks to model the spatial dependencies between cross-border grids in Europe, capturing how electricity exchanges between neighboring countries affect each region's carbon intensity.
+% EnsembleCI \cite{yan_ensembleci_2025} extends this approach by combining multiple sub-learner models through ensemble learning, selecting the best predictor per region to improve accuracy and reduce variability across regions.
+% Zhang and Wang \cite{zhang_gnn-based_2023} apply graph neural networks to model the spatial dependencies between cross-border grids in Europe, capturing how electricity exchanges between neighboring countries affect each region's carbon intensity.
 
-These models achieve strong accuracy results, with CarbonCast reporting a MAPE (Mean Absolute Percentage Error) of 4.80--13.93\% across multiple regions.
-However, they share two important limitations.
-First, they require large volumes of historical energy, weather, and carbon data to train effectively, often spanning a year or more, and depend on significant computational resources.
-This makes them difficult to deploy in regions with limited data availability and costly to retrain when grid conditions change.
-Second, and more fundamentally, their effectiveness for carbon-aware scheduling has not been evaluated.
-These models are optimized to minimize forecasting error metrics such as MAPE, but whether a lower MAPE actually translates to better scheduling outcomes, and what property of a forecast is most consequential for scheduling, remains an open question that this thesis addresses.
+% These models achieve strong accuracy results, with CarbonCast reporting a MAPE (Mean Absolute Percentage Error) of 4.80--13.93\% across multiple regions.
+CarbonCast achieve strong accuracy results, reporting a MAPE of 4.80 -- 13.93\% across multiple regions.
+However, it has two important limitations.
+First, it requires large volumes of historical energy, weather, and carbon data to train effectively, often spanning a year or more, and depend on significant computational resources.
+This makes it difficult to deploy in regions with limited data availability and costly to retrain when grid conditions change.
+Second, and more fundamentally, its effectiveness for carbon-aware scheduling has not been evaluated.
+CarbonCast is optimized to minimize forecasting error metrics such as MAPE, but whether a lower MAPE actually translates to better scheduling outcomes, and what property of a forecast is most consequential for scheduling, remains an open question that this thesis addresses.

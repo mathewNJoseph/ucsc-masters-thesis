@@ -61,9 +61,9 @@ For example, a batch compute job is a continuous workload, while EV charging is 
 Carbon-aware optimization requires planning ahead, as a scheduler must know when and where the carbon intensity will be lowest before a workload begins.
 This planning depends on carbon intensity forecasts, making forecasting a critical enabler of carbon-aware optimization \cite{grid_observability}.
 Previous forecasting efforts have focused on maximizing accuracy by minimizing error metrics such as mean absolute percentage error (MAPE), building data-intensive and computationally expensive neural networks \cite{maji_carboncast_2022,yan_ensembleci_2025,zhang_gnn-based_2023}.
-However, whether higher forecast accuracy actually produces better scheduling outcomes has not been examined.
+However, it has not been examined whether higher forecast accuracy actually produces better scheduling outcomes.
 
-In this thesis, we show that what drives better scheduling decisions is not accuracy, but \textit{concordance}: the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
+In this thesis, we show that what drives better scheduling decisions is not only accuracy, but \textit{concordance}: the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
 A scheduler that correctly identifies the lowest-carbon window will achieve better carbon outcomes, even if the predicted values are not precise.
 To demonstrate this, we present \textit{LiteCast}, a lightweight carbon intensity forecasting model that prioritizes concordance, requires less historical data than state-of-the-art models, runs on basic compute hardware, and adapts quickly to changes in the electricity grid.
-We evaluate LiteCast across 50 regions worldwide under a range of workloads (including synthetic batch jobs, a real supercomputer cluster trace, and a real EV charging trace), demonstrating near-optimal carbon scheduling performance.
+We evaluate LiteCast across 48 regions worldwide under a range of workloads (including synthetic batch jobs and a real supercomputer cluster trace), demonstrating near-optimal carbon scheduling performance.

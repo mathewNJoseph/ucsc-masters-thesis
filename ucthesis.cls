@@ -347,7 +347,7 @@
     \bigskip
     {\bfseries {\expandafter\uppercase\expandafter{\@title}} \par}
     \medskip
-    A project submitted in partial satisfaction of the \par
+    A thesis submitted in partial satisfaction of the \par
     requirements for the degree of \par
     \bigskip
     {\expandafter\expandafter{\@degree}} \par
@@ -367,7 +367,7 @@
 \vfill
 \begin{center}
 \fmfont
-\hfill \parbox{3in}{The Master's Project of {\@author}\\ is approved:} \\
+\hfill \parbox{3in}{The Thesis of {\@author}\\ is approved:} \\
 \bigskip \bigskip
 \bigskip \medskip
 \hfill\rule{2.6in}{0.5pt}\\

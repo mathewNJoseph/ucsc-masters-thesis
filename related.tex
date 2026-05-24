@@ -1,1 +1,50 @@
-Related Work.
+% !TEX root = report.tex
+
+% This chapter situates LiteCast against three lines of prior work: carbon-intensity forecasting, carbon-aware scheduling systems that consume those forecasts, and the use of ranking-based evaluation in time-series prediction.
+% The first two lines are the immediate technical neighbors of this thesis; the third is the conceptual neighbor that justifies our use of the concordance index as a forecast-quality metric.
+
+\section{Carbon-Intensity Forecasting}
+\label{sec:related-forecasting}
+
+The dominant approach to carbon-intensity forecasting is to train a neural network on long histories of energy, weather, and demand data and to evaluate the resulting model by its pointwise accuracy.
+CarbonCast \cite{maji_carboncast_2022} is the most widely cited instance of this approach and the comparison baseline used throughout this thesis.
+It uses a two-tier architecture: per-source neural networks forecast generation from each fuel type, and a second-tier CNN-LSTM combines those forecasts with weather and historical carbon data to produce a regional carbon-intensity forecast up to $96$ hours ahead.
+CarbonCast is trained on a year of hourly data per region and is reported in terms of MAPE.
+LiteCast departs from this line of work along two axes simultaneously: it uses a lightweight statistical model rather than a deep architecture, and it is designed against concordance rather than MAPE.
+
+Two practical concerns about carbon-intensity signals are orthogonal to forecasting model design but constrain what any forecaster can be expected to do.
+Sukprasert et al. \cite{sukprasert_limitations_2024} argue that the average carbon intensity used by most carbon-aware systems (and by this thesis) is not the right signal in all settings, because the marginal generator that responds to demand shifts is not always the average generator and the resulting carbon savings may differ from those predicted by average intensity. 
+Separately, grid observability work \cite{grid_observability} documents that hourly carbon-intensity data is not uniformly available across the world; many regions outside North America and Europe lack the multi-year hourly histories that heavyweight models require for training.
+LiteCast's short training window is partly a response to this second concern: a forecaster that needs only a month of recent data can be deployed in regions where a year is not available.
+Moreover, as mentioned in \S\ref{sec:background-fundamentals} the average intensity signal is more widely reported and more stable. 
+
+\section{Carbon-Aware Scheduling Systems}
+\label{sec:related-scheduling}
+
+A growing body of systems work uses carbon-intensity forecasts to defer, migrate, or reshape workloads in pursuit of lower operational emissions.
+This thesis evaluates LiteCast as the forecasting front-end of such systems rather than building a new scheduler, but the design choices in the surrounding scheduling literature are what determine which forecast properties matter in practice.
+
+\paragraph{Temporal deferral.}
+Wiesner et al.'s ``Let's Wait Awhile'' \cite{wiesner_lets_2021} is the canonical demonstration that shifting flexible workloads in time can produce meaningful carbon savings, and establishes the slack-and-deadline workload model that this thesis adopts.
+Bashir et al.\ extend this line of work in two directions: \cite{bashir_enabling_2021} characterizes the practical sources of workload flexibility that a temporal scheduler can exploit, and \cite{bashir_sunk_2024} examines the embodied (manufacturing) carbon costs that temporal scheduling cannot reduce and that bound the savings any forecaster-driven policy can achieve.
+Goldverg et al.\ \cite{goldverg_towards_nodate} explore carbon-aware scheduling specifically for AI and machine-learning workloads, whose long runtimes and heavy power draw make them the workload class with the largest absolute savings potential.
+
+\paragraph{Spatial migration.}
+A second class of systems extends temporal flexibility with geographic flexibility, executing each job in whichever region is forecast to be cleanest.
+Casper \cite{souza_casper_2023} schedules workloads across geographically distributed data centers using regional carbon-intensity forecasts.
+Caribou \cite{gsteiger_caribou_2024} extends this to a serverless setting, choosing the data-center region for each function invocation based on forecasted carbon intensity and inter-region latency.
+Ecovisor \cite{souza_ecovisor_2023} provides a virtualization layer that exposes the underlying grid's carbon signal to applications, which can then make their own scheduling decisions against it.
+GreenScheduler \cite{maji_green_2024} integrates carbon-aware scheduling into the cluster scheduler itself, deferring jobs whose deadlines permit it to lower-intensity hours.
+All of these systems treat the forecaster as a black box: the scheduler queries a carbon-intensity prediction and acts on it.
+The question this thesis raises is what property of that black box matters for the resulting decisions, and the answer, that concordance matters more than pointwise accuracy, has direct implications for how any of these systems should choose a forecaster.
+
+\section{Ranking-Based Evaluation of Forecasts}
+\label{sec:related-concordance}
+
+The concordance index $C(\hat{f}, f^{\text{act}})$ used throughout this thesis is not a new metric.
+It originates in survival analysis, where Harrell \cite{harrell_concordance_1996} introduced it to evaluate prognostic models whose downstream use is to rank patients by predicted risk rather than to estimate absolute survival times.
+The motivating observation in that setting parallels the one made in this thesis: when the downstream decision depends only on the ordering of predicted values, a metric that measures rank-agreement is more aligned with the decision than one that measures pointwise error.
+
+In carbon forecasting specifically, prior work has used pointwise metrics (MAPE, RMSE) almost exclusively, and the connection between forecast quality and realized scheduling outcomes has been studied only sparingly.
+Sukprasert et al.\ \cite{sukprasert_limitations_2024} note this gap, observing empirically that a forecaster with lower MAPE does not always produce lower realized emissions, but they do not propose an alternative metric or a forecaster designed against one.
+This thesis's contribution is to identify concordance as the property that the analysis predicts and the empirical results confirm should be optimized, and to demonstrate that a forecaster explicitly designed against it outperforms accuracy-focused models on the realized carbon savings of carbon-aware scheduling.
