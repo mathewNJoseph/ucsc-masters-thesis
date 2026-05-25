@@ -112,7 +112,7 @@ This thesis draws on both sources to characterize grid behavior and to train and
 Carbon intensity is not static: it varies continuously as the generation mix shifts in response to demand, weather, and grid conditions.
 This variability operates across two dimensions, temporal and spatial, and understanding both is essential for effective carbon-aware scheduling.
 
-\textit{Temporal variability} arises from the interaction of demand patterns and renewable generation cycles.
+\textit{Temporal variability} arises from the interaction of demand patterns, local weather, and renewable generation cycles.
 Electricity demand follows predictable diurnal rhythms tied to human behavior: demand is lowest overnight, rises sharply in the morning as households and businesses come online, and peaks in the early evening when both commercial and residential activity are at their highest.
 During periods of high demand, grid operators dispatch additional generators to maintain supply, often relying on carbon-intensive peaking units such as natural gas turbines, which temporarily elevates carbon intensity.
 Renewable generation adds a second layer of temporal variability.
@@ -125,7 +125,7 @@ Weather also affects demand directly: temperature extremes drive energy consumpt
 
 \textit{Spatial variability} reflects the fundamental differences in generation infrastructure across regions.
 Figure~\ref{fig:bg-spatial-ci} shows the distribution of hourly carbon intensity across a representative set of regional grids worldwide, sorted from cleanest to most carbon-intensive.
-Carbon intensity varies by roughly 25$\times$ between the cleanest and most carbon-intensive grids: France's nuclear-heavy grid maintains an average carbon intensity near 25~g$\cdot$CO\textsubscript{2}eq/kWh, while coal-dependent regions such as Poland or the Seychelles average above 600~g$\cdot$CO\textsubscript{2}eq/kWh.
+Carbon intensity varies by roughly 25$\times$ between the least and most  carbon-intensive grids: France's nuclear-heavy grid maintains an average carbon intensity near 25~g$\cdot$CO\textsubscript{2}eq/kWh, while coal-dependent regions such as Poland or the Seychelles average above 600~g$\cdot$CO\textsubscript{2}eq/kWh.
 Even within a single country, carbon intensity varies significantly between regions: California's grid, with a high share of solar and wind, is substantially cleaner than the coal-heavy Midwest.
 
 \begin{figure}[h]
@@ -163,7 +163,7 @@ This motivates the need for forecasting approaches that are adaptive to changing
 
 \section{Carbon-Aware Scheduling}
 
-\subsection{Types of Electrical Loads}
+\subsection{Flexibility in Electricity Loads}
 
 % TODO: idk if this sentence is fully correct
 An electrical load is considered flexible when it can adapt its consumption pattern in response to the availability of low-carbon electricity.

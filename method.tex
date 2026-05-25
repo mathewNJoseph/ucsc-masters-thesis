@@ -71,13 +71,13 @@ Two forecasts with identical pointwise error (e.g., MAPE) can yield very differe
 
 \section{Concordance over Accuracy}
 \label{sec:method-concordance}
-The dominant practice in carbon-intensity forecasting has been to minimize a pointwise error metric (Mean Absolute Percentage Error (MAPE), Root Mean Squared Error (RMSE), or Mean Squared Error (MSE)) against a held-out set of ground-truth observations \cite{maji_carboncast_2022, yan_ensembleci_2025, zhang_gnn-based_2023}.
+The dominant practice in carbon-intensity forecasting has been to minimize a pointwise error metric such as Mean Absolute Percentage Error (MAPE) against a held-out set of ground-truth observations \cite{maji_carboncast_2022, yan_ensembleci_2025, zhang_gnn-based_2023}.
 A forecast that minimizes MAPE is one whose values, on average, lie close to $f^{\text{act}}$.
 The analytic observation at the end of the previous section shows that such a forecast is not necessarily the one that minimizes $\rho$: a forecaster that is uniformly biased upward or downward but preserves the relative ordering of $f^{\text{act}}$ will pick the same schedule as the oracle, whereas a forecaster with low average error but distorted ordering may steer the scheduler into a suboptimal hour.
 
 This thesis argues that the property a forecaster should optimize for carbon-aware scheduling is therefore not pointwise accuracy but \textit{concordance}: the degree to which the forecast preserves the pairwise ordering of carbon intensities across the scheduling window.
 Concordance has a long history in survival analysis, where Harrell's concordance index quantifies a predictor's ability to rank pairs of subjects in agreement with their observed outcomes \cite{harrell_concordance_1996}.
-We adopt the same definition for forecasts evaluated against ground truth.
+We adopt the same definition for forecasts evaluated against the ground truth.
 Let $\mathcal{P} = \{(i,j) : i, j \in \mathcal{W},\ i < j\}$ be the set of all hour-pairs in the window.
 The concordance index of a forecast $\hat{f}$ with respect to the ground truth $f^{\text{act}}$ is then
 \begin{equation}
@@ -95,8 +95,8 @@ Crucially, $C$ is invariant to any monotone transformation of $\hat{f}$, includi
     \label{fig:method-motivation}
 \end{figure}
 
-\paragraph{Motivating example.}
-Figure~\ref{fig:method-motivation} illustrates the gap between accuracy and concordance with a concrete scheduling task: a $3$-hour continuous job on the ERCOT (Texas) grid over a $24$-hour window.
+A forecast that is highly concordant but inaccurate can yield better scheduling outcomes than one that is accurate but poorly concordant.
+Figure~\ref{fig:method-motivation} illustrates this gap between accuracy and concordance with a concrete scheduling task: a $3$-hour continuous job on the ERCOT (Texas) grid over a $24$-hour window.
 Four forecasts are compared against the oracle, which identifies schedule $S_1$ at $822.76\,\text{g}\cdot\text{CO}_2\text{eq}$ as the optimum.
 A deliberately ``inaccurate'' forecast with MAPE of $32\%$ nonetheless preserves the correct ordering ($C = 0.95$) and selects schedule $S_2$, achieving the same emissions as the oracle.
 Three further forecasts with much lower MAPE (between $1\%$ and $5\%$) but progressively degraded concordance ($C$ falling from $0.90$ to $0.50$) select schedules $S_3$, $S_4$, and $S_5$, with realized emissions up to $20\%$ above the optimum.
@@ -104,7 +104,7 @@ The example mirrors the formal observation made in \S\ref{sec:method-formulation
 What matters is whether the forecast and the ground truth agree on which hour is the cheapest.
 
 
-\section{LiteCast}
+\section{LiteCast Architecture}
 \label{sec:method-litecast}
 
 We operationalize the concordance insight with \textit{LiteCast}, a lightweight carbon-intensity forecaster and carbon-aware scheduler.

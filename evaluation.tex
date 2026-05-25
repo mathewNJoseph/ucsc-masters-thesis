@@ -8,21 +8,21 @@
 \section{Setup and Methodology}
 \label{sec:eval-setup}
 
-\subsection{Research Questions}
-\label{sec:eval-research-questions}
+% \subsection{Research Questions}
+% \label{sec:eval-research-questions}
 
-The evaluation is organized around two questions.
-\textit{(Q1) Does LiteCast's forecast preserve the ordering of the realized signal across grids of varying renewable penetration?}
-This is the standalone-forecaster question and is answered in \S\ref{sec:eval-forecast-quality}, where we compare LiteCast against CarbonCast on both pointwise accuracy (MAPE) and rank-agreement (concordance).
-\textit{(Q2) Does higher concordance translate into better scheduling outcomes under both temporal and spatial flexibility?}
-This is the question that connects forecast quality to the downstream optimization the forecast feeds, and is answered in \S\ref{sec:eval-temporal} and \S\ref{sec:eval-spatial}.
+% The evaluation is organized around two questions.
+% \textit{(Q1) Does LiteCast's forecast preserve the ordering of the realized signal across grids of varying renewable penetration?}
+% This is the standalone-forecaster question and is answered in \S\ref{sec:eval-forecast-quality}, where we compare LiteCast against CarbonCast on both pointwise accuracy (MAPE) and rank-agreement (concordance).
+% \textit{(Q2) Does higher concordance translate into better scheduling outcomes under both temporal and spatial flexibility?}
+% This is the question that connects forecast quality to the downstream optimization the forecast feeds, and is answered in \S\ref{sec:eval-temporal} and \S\ref{sec:eval-spatial}.
 % \textit{(Q3) Does the adaptive heuristic of \S\ref{sec:method-heuristic} recover additional savings when grid conditions deviate from the training window?}
 % This isolates the contribution of the heuristic from the SARIMAX core and is answered alongside Q2 in \S\ref{sec:eval-temporal} and in the cluster-trace replay of \S\ref{sec:eval-cluster}.
 
 \subsection{Energy and Weather Traces}
 \label{sec:eval-data}
 
-We use publicly available 2023 energy-mix traces and weather data for $48$ regions across the USA and Europe.
+To train LiteCast, we used publicly available 2023 energy-mix traces and weather data for $48$ regions across the USA and Europe.
 US balancing-authority traces are drawn from the EIA's hourly electric-power monitor \cite{eia_data}, European transmission-system-operator traces from the ENTSO-E Transparency Platform \cite{entsoe_data}, and weather observations from the NSF NCAR Research Data Archive for Atmospheric and Ocean Sciences.
 Each regional trace reports the hourly breakdown of generation by source (e.g., coal, natural gas, solar, wind, hydro, nuclear), the total electricity demand in $\text{kWh}$, and weather variables including temperature, humidity, wind speed, and solar irradiance.
 Electricity demand is used as an exogenous regressor in every region.
