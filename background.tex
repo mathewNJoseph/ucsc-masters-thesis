@@ -8,7 +8,7 @@
 \subsection{How Carbon Intensity is Calculated}
 
 The environmental impact of electricity consumption is quantified through carbon intensity, measured in grams of CO\textsubscript{2} equivalent per kilowatt-hour (g$\cdot$CO\textsubscript{2}eq/kWh).
-This metric captures the amount of greenhouse gas emitted per unit of electricity generated, accounting for multiple gases through their CO\textsubscript{2} equivalent (CO\textsubscript{2}eq) warming potential.
+This metric captures the amount of greenhouse gases (GHG) emitted per unit of electricity generated, accounting for multiple GHG through their CO\textsubscript{2} equivalent (CO\textsubscript{2}eq) warming potential \cite{ghg_protocol}.
 Each energy source carries a distinct carbon factor, defined as the amount of CO\textsubscript{2}eq emitted per kWh of electricity it produces.
 Carbon factors are calculated per energy source by the Intergovernmental Panel on Climate Change (IPCC) and represent the direct emissions from the operational generation of electricity \cite{ipcc_carbon_factors_2014}.
 
@@ -76,11 +76,12 @@ Natural gas emits roughly 370~g$\cdot$CO\textsubscript{2}eq/kWh during operation
 Despite their environmental cost, both are highly dispatchable: operators can increase or decrease their output on demand, making them reliable tools for balancing supply and demand.
 
 Zero-carbon sources, including wind, solar, hydropower, and nuclear, emit no direct carbon during operation, but each carries lifecycle emissions from the manufacturing, construction, or extraction activities that precede generation.
-Solar panels and wind turbines require energy-intensive manufacturing of silicon, rare-earth metals, and structural components, though their long operational lifespans typically amortize these emissions over time.
+Solar panels and wind turbines require energy-intensive manufacturing of silicon, rare-earth metals, and structural components~\cite{iea_critical_minerals_2021}, though their long operational lifespans typically amortize these emissions over time.
 Wind and solar are also non-dispatchable: their output depends entirely on prevailing weather conditions and cannot be controlled by grid operators.
 Hydropower is partially dispatchable through reservoir management but is subject to seasonal water availability, and constructing a dam requires flooding large natural habitats.
-Nuclear power is fully dispatchable and provides stable baseload generation that is insensitive to weather; its lifecycle emissions are driven primarily by uranium mining, processing, and long-term waste handling, but its extreme energy density means small fuel quantities yield large amounts of electricity.
-However, nuclear is geographically uncommon: in the United States, only 28 of 50 states host commercial nuclear reactors \cite{eia_nuclear}, limiting its contribution to most regional grids.
+Nuclear power is insensitive to weather, but its dispatchability is limited: reactors can only ramp output over hours rather than minutes.
+Its lifecycle emissions come from uranium mining and fuel processing, and the long-term handling of radioactive waste remains an unresolved challenge, as no permanent disposal repository is yet operational in the United States.
+Nuclear capacity is also slow to expand: its share of U.S. electricity generation is projected to decline from 17\% in 2025 to roughly 12\% by 2050~\cite{eia_nuclear}, limiting its contribution to future grid decarbonization.
 
 Each regional grid is managed by a balancing authority, which is responsible for continuously matching electricity supply with demand in real time.
 The carbon intensity of a grid at any moment is determined by which generators the balancing authority has dispatched to meet current demand.

@@ -1,13 +1,15 @@
-Electricity demand has been rising steadily, driven by electric vehicles, artificial intelligence, and data centers.
-To meet this demand, electricity grids draw from a mix of energy sources, each with different carbon factors. 
+Electricity demand is rising, driven by electric vehicles, artificial intelligence, and data centers.
+% To meet this demand, electricity grids draw from a mix of energy sources, each with different carbon factors. 
+To meet this demand, grids draw from various energy sources, each with different carbon factors. 
 The combination of these factors is the carbon intensity signal used to calculate the carbon emissions of workloads on the grid. 
-The availability renewable energy sources, weather, and demand all cause the carbon intensity to fluctuate.
+The availability of renewable energy sources, weather, and demand all cause the carbon intensity to fluctuate.
 Carbon-aware optimizations exploit these fluctuations by shifting workloads to times and places where the grid is cleaner.
 % To have carbon-optimal scheduling, these carbon-aware optimizers may require forecasts of future carbon intensity.
-These optimizers rely on forecasting models trained to minimize error on large historical datasets, yet the key insight for carbon-aware scheduling is not how green a region will be, but when it will be greenest.
+These optimizations rely on forecasting models trained to minimize error on large historical datasets, yet the key insight for carbon-aware scheduling is when a region will be greenest, not how green it will be.
 % Existing forecasting approaches have focused on being as accurate as possible, but it is not clear that a more accurate forecast actually leads to better carbon savings.
-We argue that carbon intensity forecasts should focus not only on accuracy, but also on \textit{concordance}: the degree to which a forecast preserves the correct ordering of intensity values over time.
+We argue that carbon intensity forecasts should target not only accuracy; they must also achieve high \textit{concordance}: the degree to which they preserve the correct ordering of intensity values over time.
 % In this thesis, we argue that what matters more for carbon-aware scheduling is \textit{concordance}: the degree to which a forecast preserves the correct ordering of carbon intensity values over time.
-We present \textit{LiteCast}, a lightweight time-series forecaster that targets high concordance using only a month of historical energy, weather, and demand data, which allows it to quickly adapt to grid changes.
-Across 48 grids worldwide and real-world workloads, LiteCast delivers 10\% higher carbon savings than state-of-the-art models and achieves 82\% of the maximum carbon optimality for week-long schedules.
+We present \textit{LiteCast}, a lightweight time-series forecaster that targets high concordance using only a month of energy, weather, and demand data, which allows it to quickly adapt to grid changes.
+Across 48 grids worldwide and real-world workloads, LiteCast delivers 10\% higher carbon savings than state-of-the-art models and achieves 82\% of the maximum carbon savings available for week-long schedules.
+% Across 48 grids worldwide and real-world workloads, LiteCast delivers 10\% higher carbon savings than state-of-the-art models and achieves 82\% of the maximum carbon savings available for %week-long schedules.
 % Our evaluation across 48 regions worldwide and multiple real-world workloads shows that LiteCast delivers 20\% higher carbon savings compared to state-of-the-art models and achieves up to 97\% of the maximum attainable average savings.

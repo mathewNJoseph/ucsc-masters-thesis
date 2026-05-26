@@ -4,7 +4,7 @@
 \label{sec:conclusion-summary}
 
 Carbon-aware scheduling depends on carbon-intensity forecasts to choose when and where to run flexible workloads.
-The existing forecasting literature treats this as an accuracy problem and optimizes its models against MAPE, but the scheduler's decision is fundamentally an ordering problem: given a window of candidate hours or regions, the scheduler picks whichever has the lowest predicted emissions.
+The existing forecasting literature treats this as an accuracy problem and optimizes its models against MAPE. However, the scheduler's decision is fundamentally an ordering problem: given a window of candidate hours or regions, the scheduler picks whichever has the lowest predicted emissions.
 This thesis argues that the dimension of forecast quality that actually drives scheduling outcomes is rank-preservation, formalized as the concordance index $C(\hat{f}, f^{\text{act}})$, and not pointwise accuracy.
 To demonstrate this we built LiteCast, a lightweight per-source SARIMAX forecaster trained on a month-long rolling window of hourly energy, weather, and demand data, and evaluated it against the state-of-the-art deep-learning forecaster CarbonCast across $48$ regions and a real cluster trace.
 
@@ -13,16 +13,13 @@ To demonstrate this we built LiteCast, a lightweight per-source SARIMAX forecast
 
 This thesis makes three contributions.
 
-\textit{Analytic.}
 We show that the scheduler's chosen start hour (continuous jobs) or chosen hour set (interruptible jobs) depends on the forecast only through the ordering it induces over the window.
 Two forecasts with identical MAPE can yield different schedules whenever their induced orderings differ, and two forecasts with very different MAPE can yield identical schedules whenever their orderings agree on the relevant comparisons.
 The concordance index is the natural quantification of this rank-agreement, and is therefore the forecast-quality metric most directly aligned with scheduling outcomes.
 
-\textit{Systems.}
 We design and implement LiteCast, a per-source SARIMAX pipeline that produces hourly carbon-intensity forecasts spanning more than a week from a month of recent energy, weather, and demand observations.
 LiteCast trains in seconds on a single CPU, refits on each job submission, and requires no GPU infrastructure or multi-year historical data.
 
-\textit{Empirical.}
 Across $48$ worldwide regions, LiteCast outperforms CarbonCast on both concordance and MAPE, and the gap on realized carbon savings tracks concordance rather than MAPE.
 The result holds across continuous and interruptible job models, across slack lengths from $24$ to $168$ hours, across a spatial-migration evaluation over all grid pairs, and on the KIT cluster-trace replay where job lengths and slacks are drawn from real user behavior rather than from a synthetic sweep.
 

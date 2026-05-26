@@ -23,88 +23,15 @@
 \label{sec:eval-data}
 
 To train LiteCast, we used publicly available 2023 energy-mix traces and weather data for $48$ regions across the USA and Europe.
-US balancing-authority traces are drawn from the EIA's hourly electric-power monitor \cite{eia_data}, European transmission-system-operator traces from the ENTSO-E Transparency Platform \cite{entsoe_data}, and weather observations from the NSF NCAR Research Data Archive for Atmospheric and Ocean Sciences.
+US balancing-authority traces are drawn from the EIA's hourly electric-power monitor \cite{eia_data}, European transmission-system-operator traces from the ENTSO-E Transparency Platform \cite{entsoe_data}, and weather observations from the NSF NCAR Research Data Archive for Atmospheric and Ocean Sciences \cite{ncep_gfs_2015}.
 Each regional trace reports the hourly breakdown of generation by source (e.g., coal, natural gas, solar, wind, hydro, nuclear), the total electricity demand in $\text{kWh}$, and weather variables including temperature, humidity, wind speed, and solar irradiance.
 Electricity demand is used as an exogenous regressor in every region.
 The regions used in our experiments span the full carbon-intensity spectrum introduced in Background~\S2.1.4: from low-intensity, low-variability grids dominated by nuclear and hydro (e.g., France, Sweden, Slovakia) to high-intensity, low-variability grids dominated by coal (e.g., Poland, Serbia, Arizona Public Service), and including the high-variability renewable-rich grids that are the central interest of this work (e.g., ERCOT, Denmark, Germany, Lithuania).
-The complete list of regions, along with their identifying balancing-authority or TSO code, mean carbon intensity, coefficient of variation, dominant generation source, and aggregate renewable share, is given in Table~\ref{tab:eval-regions}.
+The complete list of regions, along with their identifying balancing-authority or TSO code, mean carbon intensity, coefficient of variation, dominant generation source, and aggregate renewable share, is given in Table~\ref{tab:eval-regions} in Appendix~\ref{chap:appendix}.
 
-Carbon intensity is computed as the demand-weighted average of source-level intensities using the IPCC AR5 operational carbon factors \cite{ipcc_carbon_factors_2014} introduced in Background~\S2.1.2, expressed in $\text{g}\cdot\text{CO}_2\text{eq}/\text{kWh}$ at hourly granularity.
+Carbon intensity is computed as the demand-weighted average of source-level intensities using the IPCC AR5 operational carbon factors \cite{ipcc_carbon_factors_2014} introduced in \S2.1.2, expressed in $\text{g}\cdot\text{CO}_2\text{eq}/\text{kWh}$ at hourly granularity.
 Hourly granularity is the highest resolution at which average carbon intensity is publicly reported across this set of regions, and the grid's intensity rarely varies meaningfully on sub-hourly timescales, so finer resolution would not materially change the results.
 The evaluation uses 2023 for both training and testing of LiteCast (which trains on a month-long rolling window ending at each job's submission time, see \S\ref{sec:eval-implementation}); CarbonCast, which requires a longer training history, uses all of 2022 to forecast over 2023.
-
-{\footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.0}
-\begin{longtable}{@{}llrrlr@{}}
-\caption{The $48$ regions used in the evaluation, sorted by mean carbon intensity. Mean CI is in $\text{g}\cdot\text{CO}_2\text{eq}/\text{kWh}$. CV is the coefficient of variation ($\sigma/\mu$) over 2023. Dominant source lists the largest share of generation; renewable share aggregates wind, solar, and hydro.}
-\label{tab:eval-regions} \\
-\toprule
-Region & Code & Mean CI & CV & Dominant source & Renew.\ (\%) \\
-\midrule
-\endfirsthead
-\multicolumn{6}{c}{\tablename\ \thetable{} -- continued from previous page} \\
-\toprule
-Region & Code & Mean CI & CV & Dominant source & Renew.\ (\%) \\
-\midrule
-\endhead
-\midrule
-\multicolumn{6}{r}{continued on next page} \\
-\endfoot
-\bottomrule
-\endlastfoot
-Switzerland & CH & 0 & --- & nuclear (57\%) & 43 \\
-France & FR & 24 & 0.65 & nuclear (67\%) & 25 \\
-PacifiCorp West & PACW & 43 & 0.69 & hydro (44\%) & 94 \\
-Bonneville Power Administration & BPAT & 44 & 0.39 & hydro (71\%) & 79 \\
-Austria & AT & 46 & 1.00 & hydro (64\%) & 84 \\
-Finland & FI & 54 & 0.77 & nuclear (47\%) & 39 \\
-Lithuania & LT & 67 & 0.95 & wind (47\%) & 69 \\
-Southwestern Power Administration & SPA & 82 & 1.75 & hydro (86\%) & 86 \\
-Slovakia & SK & 86 & 0.25 & nuclear (63\%) & 17 \\
-Idaho Power & IPCO & 100 & 0.54 & hydro (55\%) & 76 \\
-Spain & ES & 102 & 0.45 & wind (25\%) & 51 \\
-Portugal & PT & 104 & 0.67 & wind (33\%) & 66 \\
-Sweden & SE & 117 & 0.19 & nuclear (43\%) & 26 \\
-Belgium & BE & 120 & 0.36 & nuclear (39\%) & 29 \\
-Denmark & DK & 122 & 0.69 & wind (58\%) & 68 \\
-Latvia & LV & 127 & 0.79 & hydro (64\%) & 68 \\
-Texas & ERCO & 130 & 0.27 & wind (46\%) & 55 \\
-Hungary & HU & 159 & 0.26 & nuclear (48\%) & 17 \\
-Croatia & HR & 165 & 0.35 & hydro (46\%) & 65 \\
-Slovenia & SI & 175 & 0.48 & nuclear (38\%) & 37 \\
-California ISO & CISO & 185 & 0.36 & natural gas (46\%) & 42 \\
-Salt River Project & SRP & 186 & 0.23 & nuclear (52\%) & 4 \\
-Duke Energy Carolinas & DUK & 217 & 0.19 & nuclear (54\%) & 6 \\
-Tennessee Valley Authority & TVA & 224 & 0.15 & nuclear (44\%) & 11 \\
-Greece & GR & 231 & 0.41 & natural gas (38\%) & 52 \\
-ISO New England & ISNE & 244 & 0.12 & natural gas (58\%) & 13 \\
-Italy & IT & 254 & 0.24 & natural gas (45\%) & 36 \\
-Germany & DE & 268 & 0.43 & wind (30\%) & 47 \\
-Turlock Irrigation District & TIDC & 272 & 0.20 & natural gas (74\%) & 26 \\
-Bulgaria & BG & 273 & 0.28 & nuclear (41\%) & 20 \\
-PJM Interconnection & PJM & 280 & 0.09 & natural gas (44\%) & 7 \\
-South Carolina E\&G & SCEG & 285 & 0.22 & natural gas (47\%) & 10 \\
-Florida Power \& Light & FPL & 302 & 0.10 & natural gas (58\%) & 7 \\
-Southwest Power Pool & SWPP & 305 & 0.33 & wind (37\%) & 40 \\
-Southern Company & SOCO & 326 & 0.09 & natural gas (54\%) & 7 \\
-Czechia & CZ & 326 & 0.19 & nuclear (41\%) & 8 \\
-El Paso Electric & EPE & 333 & 0.13 & natural gas (90\%) & 10 \\
-Public Service Co.\ of Colorado & PSCO & 343 & 0.25 & wind (31\%) & 40 \\
-Nevada Power & NEVP & 347 & 0.23 & natural gas (61\%) & 21 \\
-Estonia & EE & 348 & 0.46 & coal (42\%) & 34 \\
-LA Dept.\ of Water \& Power & LDWP & 352 & 0.27 & natural gas (46\%) & 28 \\
-Midcontinent ISO & MISO & 359 & 0.14 & natural gas (39\%) & 18 \\
-Netherlands & NL & 402 & 0.16 & natural gas (39\%) & 16 \\
-Arizona Public Service & AZPS & 439 & 0.21 & natural gas (46\%) & 17 \\
-PacifiCorp East & PACE & 452 & 0.22 & coal (47\%) & 28 \\
-NorthWestern Energy (MT) & NWMT & 470 & 0.17 & coal (60\%) & 35 \\
-Serbia & RS & 481 & 0.19 & coal (61\%) & 1 \\
-Associated Electric Cooperative & AECI & 502 & 0.12 & coal (46\%) & 12 \\
-Poland & PL & 532 & 0.18 & coal (64\%) & 24 \\
-South Carolina Public Service & SC & 590 & 0.09 & coal (61\%) & 5 \\
-\end{longtable}
-}
 
 \subsection{Workload Model}
 \label{sec:eval-workload}
@@ -544,7 +471,7 @@ The results above support the chapter's framing question with two empirical clai
 \subsection{Concordance, not Precision, Drives Realized Savings}
 \label{sec:eval-discussion-concordance}
 
-The standalone forecast-quality comparison in \S\ref{sec:eval-forecast-quality} shows that LiteCast achieves consistently higher concordance.
+The standalone forecast-quality comparison in \S\ref{sec:eval-forecast-quality} shows that LiteCast consistently achieves higher concordance.
 The carbon-optimality results in Figures~\ref{fig:eval-carbon-optimality-continuous},~\ref{fig:eval-carbon-optimality-interruptible}, and~\ref{fig:eval-spatial-overall} track concordance, not MAPE.
 % The per-region scatter in Figure~\ref{fig:eval-concordance-vs-emissions}(b) makes the relationship explicit: the regions where LiteCast's concordance advantage is largest are also the regions where its emissions advantage is largest.
 This is the structural relationship predicted by the analysis in \S\ref{sec:method-concordance}: the scheduler depends on the forecast only through the ordering it induces, so ordering is what should be optimized.
