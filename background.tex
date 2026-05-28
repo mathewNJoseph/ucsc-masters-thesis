@@ -79,11 +79,11 @@ Zero-carbon sources, including wind, solar, hydropower, and nuclear, emit no dir
 Solar panels and wind turbines require energy-intensive manufacturing of silicon, rare-earth metals, and structural components~\cite{iea_critical_minerals_2021}, though their long operational lifespans typically amortize these emissions over time.
 Wind and solar are also non-dispatchable: their output depends entirely on prevailing weather conditions and cannot be controlled by grid operators.
 Hydropower is partially dispatchable through reservoir management but is subject to seasonal water availability, and constructing a dam requires flooding large natural habitats.
-Nuclear power is insensitive to weather, but its dispatchability is limited: reactors can only ramp output over hours rather than minutes.
+Nuclear power is insensitive to weather, but its dispatchability is limited: reactors can only ramp output over hours rather than minutes. \red{Son: Idk what this means.}
 Its lifecycle emissions come from uranium mining and fuel processing, and the long-term handling of radioactive waste remains an unresolved challenge, as no permanent disposal repository is yet operational in the United States.
 Nuclear capacity is also slow to expand: its share of U.S. electricity generation is projected to decline from 17\% in 2025 to roughly 12\% by 2050~\cite{eia_nuclear}, limiting its contribution to future grid decarbonization.
 
-Each regional grid is managed by a balancing authority, which is responsible for continuously matching electricity supply with demand in real time.
+Each regional grid is managed by a balancing authority, which is responsible for continuously matching electricity supply with \red{Son: "to" not "with"} demand in real time.
 The carbon intensity of a grid at any moment is determined by which generators the balancing authority has dispatched to meet current demand.
 The composition of these portfolios varies dramatically across regions, as illustrated in Figure~\ref{fig:bg-energy-source}.
 Regions with a high share of renewables and nuclear in their generation mix, such as France (approximately 70\% nuclear) or Sweden (dominated by hydro and nuclear), have persistently low carbon intensity, while regions that rely heavily on coal and gas, such as parts of the United States Midwest or Poland, maintain high carbon intensity.
@@ -167,11 +167,12 @@ This motivates the need for forecasting approaches that are adaptive to changing
 \subsection{Flexibility in Electricity Loads}
 
 % TODO: idk if this sentence is fully correct
-An electrical load is considered flexible when it can adapt its consumption pattern in response to the availability of low-carbon electricity.
+An electrical load \red{Son: is this talking about a workload like a job? Maybe either name examples for an electrical load (e.g computing jobs)? I know you add specifics later but I get confused here} is considered flexible when it can adapt its consumption pattern in response to the availability of low-carbon electricity.
 Flexibility has two independent dimensions: temporal and spatial.
 
 \textit{Temporal flexibility} is the ability of a load to be postponed, extended, or shortened relative to its nominal schedule.
-Temporally flexible loads fall into two categories based on whether their execution can be interrupted.
+\red{Son: why can loads be postponed, extended, or shortened? What kind of loads are temporarilly flexible?}
+Temporally flexible loads fall into two categories based on whether their execution can be interrupted. 
 A \textit{continuous} load must run uninterrupted from start to finish once it begins: stopping and restarting would either damage the process or produce an incorrect result.
 Examples include aluminum smelting, AI model training, and batch scientific computing jobs.
 An \textit{interruptible} load can be paused and resumed at any point without affecting its outcome, provided it completes the required total amount of work within a deadline.
@@ -179,10 +180,16 @@ EV charging is a canonical example: a vehicle must receive a target charge by a 
 
 \textit{Spatial flexibility} is the ability of a load to shift its execution to a different geographic location.
 Spatially flexible loads can migrate across multiple sites, each connected to a different regional grid with a potentially different carbon intensity.
+\red{Son: why are loads spatially flexible? What kind of loads are spatially flexible? What technology enable them to be spatially flexible?}
+
 Web services and cloud batch workloads are common examples: a distributed cluster spanning multiple regions can redirect computation to whichever site currently has the lowest carbon intensity.
-Like temporal flexibility, spatial flexibility can combine with either continuous or interruptible execution.
+Like temporal flexibility, spatial flexibility can combine with either continuous or interruptible execution. \red{Is combine the right word here?}
 A web service is spatially flexible and continuous, since it must remain available at all times but can migrate with minimal disruption.
 A batch job may be both temporally and spatially flexible, allowing it to wait for a cleaner time as well as migrate to a cleaner region.
+
+\red{I have no idea if it's wise, but as a reader I would also like if you name 
+examples of workloads that are not temporally or spatially flexible as well. 
+This is kinda like glazing your opps though...}
 
 \subsection{Carbon-Aware Optimization Strategies}
 
@@ -220,6 +227,7 @@ The window length $\mathcal{J}_{\text{window}}$ is the sum of the job's intrinsi
 \end{equation}
 where $\mathcal{J}_{\text{length}}$ is the time required to execute the job and $\mathcal{J}_{\text{slack}}$ is the additional flexibility the user grants the scheduler to defer execution.
 Window lengths can range from a few hours for short batch jobs to multiple days for long-running AI training workloads with large deadline slack.
+\red{Perhaps add in: "The task of the scheduler is thus to identify the points of lowest emissions across grids to distribute or postpone the $\mathcal{J}_{\text{length}}$ to, within the specified $\mathcal{J}_{\text{window}}$. What you did above was jumping from "we need to plan ahead", "we need to predict this window", to here's a forecaster that tries to maximize accuracy. Your argument is we that the goal of the SOTA does not match the goal of carbon aware scheduling, and that it was never even evaluated in that context. You must make this connection. I can see your argument, but you should make it more explicit. What I suggested is kinda awkward to jam in so maybe find some other way?}
 Current state-of-the-art forecasting approaches build complex neural network models to capture the spatiotemporal dynamics of the grid's energy source mix.
 CarbonCast \cite{maji_carboncast_2022} uses a two-tier hierarchical approach: a first tier of neural networks generates production forecasts for each individual energy source, and a second tier combines these with historical carbon data and weather forecasts using a CNN-LSTM architecture to produce multi-day carbon intensity forecasts up to 96 hours ahead.
 % EnsembleCI \cite{yan_ensembleci_2025} extends this approach by combining multiple sub-learner models through ensemble learning, selecting the best predictor per region to improve accuracy and reduce variability across regions.
