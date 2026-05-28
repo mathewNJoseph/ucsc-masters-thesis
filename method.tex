@@ -53,7 +53,7 @@ A value of $\rho = 1$ indicates that the forecaster's schedule achieves the same
 
 \paragraph{Why ranking matters.}
 The $\arg\min$ in Eq.~\ref{eq:method-continuous-start} depends on $\hat{f}$ only through the \textit{ordering} of its windowed sums across $\mathcal{H}$, not through their absolute magnitudes.
-Concretely, if $g$ is any strictly increasing function and we replace $\hat{f}$ with $g(\hat{f})$ entrywise, the scheduler's decision is unchanged whenever the induced ordering of windowed sums is preserved.
+Concretely, if $g$ is any strictly increasing function and we replace $\hat{f}$ with $g(\hat{f})$ entrywise \red {Son: confused by this phrasing. Might be useful to try to split this into 2 sentences}, the scheduler's decision is unchanged whenever the induced ordering of windowed sums is preserved.
 A forecast $\hat{f}$ achieves the optimal schedule $s_{\text{pred}} = s_{\text{oracle}}$ whenever the start hour with the smallest predicted windowed sum coincides with the start hour with the smallest realized windowed sum:
 \begin{equation}
     \arg\min_{h \in \mathcal{H}} \sum_{k=0}^{\mathcal{J}_{\text{length}}-1} \hat{f}_{h+k} \;=\; \arg\min_{h \in \mathcal{H}} \sum_{k=0}^{\mathcal{J}_{\text{length}}-1} f^{\text{act}}_{h+k}.
@@ -62,7 +62,6 @@ A forecast $\hat{f}$ achieves the optimal schedule $s_{\text{pred}} = s_{\text{o
 This condition is governed by the rank-agreement between $\hat{f}$ and $f^{\text{act}}$, not by their pointwise distance.
 % TODO does this make sense?
 Two forecasts with identical pointwise error (e.g., MAPE) can yield very different schedules, while two forecasts with very different pointwise errors can yield identical schedules.
-
 % \paragraph{An analytic observation.}
 % Equations~\ref{eq:method-continuous-start}--\ref{eq:method-interruptible-emissions} expose a structural property of the carbon-aware scheduling problem that motivates the rest of this chapter.
 % The forecast $\hat{f}$ enters $E_{\text{pred}}$ \textit{only} through the $\arg\min$ in Eqs.~\ref{eq:method-continuous-start} and~\ref{eq:method-interruptible-set}; the realized emissions are then evaluated against $f^{\text{act}}$, never against $\hat{f}$.
@@ -91,7 +90,8 @@ Crucially, $C$ is invariant to any monotone transformation of $\hat{f}$, includi
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.85\linewidth]{images/method/MAPE_vs_Concordance_Example_in_ERCO_for_a_3_Hour_Job_Length.pdf}
-    \caption{Inaccuracy versus misalignment for a 3-hour continuous job on the ERCOT grid over a 24-hour window. A high-MAPE but high-concordance forecast matches the oracle's schedule; low-MAPE forecasts with degraded concordance pick increasingly suboptimal schedules.}
+    \caption{Inaccuracy versus misalignment for a 3-hour continuous job on the ERCOT grid over a 24-hour window. A high-MAPE but high-concordance forecast matches the oracle's schedule; low-MAPE forecasts with degraded concordance pick increasingly suboptimal schedules.
+    \red{You need to explain this plot more in the caption. I need a sentence explaining what are the S1, S2, etc. Maybe S1 should be labeled as Sopt, while the others are numbered}}
     \label{fig:method-motivation}
 \end{figure}
 
@@ -167,7 +167,7 @@ where $\mathcal{S}$ is the set of sources active in the region, $c_s$ is the ope
 % It also aims to detect trends which is important for concordance
 SARIMAX has three properties that align with the design principles above.
 It is \textit{deterministic}: each call returns a point forecast rather than a distribution, so the relative ordering of $\hat{f}_t$ across the window is unambiguous and concordance is well-defined.
-It is \textit{interpretable}: the coefficients $\phi_1$, $\Phi_1$, $\theta_1$, $\Theta_1$, and $\vec{\beta}$ have direct physical meaning, which simplifies debugging when forecasts fail in a new region.
+It is \textit{interpretable}: the coefficients $\phi_1$, $\Phi_1$, $\theta_1$, $\Theta_1$, and $\vec{\beta}$ have direct physical meaning, which simplifies debugging when forecasts fail in a new region. \red{How does this correlate with the design principles? Which principle? I don't see the connection. Also "simplifying debugging" is a very weak argument.}
 And it is \textit{lightweight}: fitting a model on up to a month of hourly data takes seconds on a single CPU core, in contrast to the hours of GPU training required by deep-learning forecasters.
 % These properties together make LiteCast cheap to retrain whenever new data arrives, which the scheduling heuristic in \S\ref{sec:method-heuristic} exploits.
 These properties together make LiteCast cheap to train every day for any length of windows.
