@@ -12,6 +12,8 @@
 \usepackage{longtable}
 \usepackage{subcaption}
 \usepackage{float}
+\usepackage{etoolbox}
+\AtBeginEnvironment{thebibliography}{\sloppy}
 \sisetup{
   group-separator = {,}, 
   group-minimum-digits = 4,
@@ -96,7 +98,9 @@
 
 \chapter{Related Work}
 \label{chap:related}
+\begin{sloppypar}
 \input{related}
+\end{sloppypar}
 
 \chapter{Conclusion}
 \label{chap:conclusion}
