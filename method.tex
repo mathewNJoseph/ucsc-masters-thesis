@@ -53,7 +53,7 @@ A value of $\rho = 1$ indicates that the forecaster's schedule achieves the same
 
 \paragraph{Why ranking matters.}
 The $\arg\min$ in Eq.~\ref{eq:method-continuous-start} depends on $\hat{f}$ only through the \textit{ordering} of its windowed sums across $\mathcal{H}$, not through their absolute magnitudes.
-Concretely, if $g$ is any strictly increasing function and we replace $\hat{f}$ with $g(\hat{f})$ entrywise \red {Son: confused by this phrasing. Might be useful to try to split this into 2 sentences}, the scheduler's decision is unchanged whenever the induced ordering of windowed sums is preserved.
+Concretely, if $g$ is any strictly increasing function and we replace $\hat{f}$ with $g(\hat{f})$ entrywise, the scheduler's decision is unchanged whenever the induced ordering of windowed sums is preserved.
 A forecast $\hat{f}$ achieves the optimal schedule $s_{\text{pred}} = s_{\text{oracle}}$ whenever the start hour with the smallest predicted windowed sum coincides with the start hour with the smallest realized windowed sum:
 \begin{equation}
     \arg\min_{h \in \mathcal{H}} \sum_{k=0}^{\mathcal{J}_{\text{length}}-1} \hat{f}_{h+k} \;=\; \arg\min_{h \in \mathcal{H}} \sum_{k=0}^{\mathcal{J}_{\text{length}}-1} f^{\text{act}}_{h+k}.
